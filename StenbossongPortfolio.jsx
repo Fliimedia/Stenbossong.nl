@@ -360,9 +360,9 @@ const BASE_CSS = `
     .about-inner { display: block; }
     .pic-wrapper { margin: 50px auto 0; width: 70%; }
     .jobs-inner { display: block; }
-    .tab-list { display: flex; overflow-x: auto; width: calc(100% + 100px); padding-left: 50px; margin-left: -50px; margin-bottom: 30px; scrollbar-width: none; }
+    .tab-list { display: flex; flex-wrap: wrap; width: 100%; padding-left: 0; margin-left: 0; margin-bottom: 30px; }
     .tab-list::-webkit-scrollbar { display: none; }
-    .tab-btn { border-left: none; border-bottom: 2px solid var(--lightest-navy); min-width: 120px; justify-content: center; padding: 0 15px; }
+    .tab-btn { flex: 1 1 auto; border-left: none; border-bottom: 2px solid var(--lightest-navy); min-width: 0; justify-content: center; padding: 0 12px; }
     .tab-btn.active { border-bottom-color: var(--green); }
     .tab-highlight { display: none; }
     .tab-panels { margin-left: 0; }
@@ -377,7 +377,7 @@ const BASE_CSS = `
     .numbered-heading::after { width: 100%; }
     #hero { height: auto; padding-top: var(--nav-height); min-height: 100vh; }
   }
-  @media (max-width: 600px) { .tab-list { width: calc(100% + 50px); padding-left: 25px; margin-left: -25px; } }
+  @media (max-width: 600px) { .tab-list { width: 100%; padding-left: 0; margin-left: 0; } }
   @media (max-width: 480px) { main { padding: 125px 25px; } body { font-size: var(--fz-lg); } #hero h1 { margin: 0 0 20px 2px; } .project-content { padding: 25px 25px 20px; } #contact { margin: 0 auto 50px; } }
   @media (max-height: 700px) and (min-width: 700px) { #hero { height: auto; padding-top: var(--nav-height); } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
