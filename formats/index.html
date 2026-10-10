@@ -2,31 +2,78 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-<title>Sten Bossong</title>
-<meta name="description" content="Sten Bossong | Portfolio."/>
-<meta name="image" content="https://stenbossong.nl/og.png"/>
-<meta property="og:title" content="Sten Bossong"/>
-<meta property="og:description" content="Sten Bossong | Portfolio."/>
-<meta property="og:image" content="https://stenbossong.nl/og.png"/>
-<meta property="og:url" content="https://stenbossong.nl/formats"/>
-<meta property="og:type" content="website"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:creator" content="@stenn10"/>
-<meta name="twitter:title" content="Sten Bossong"/>
-<meta name="twitter:description" content="Sten Bossong | Portfolio."/>
-<meta name="twitter:image" content="https://stenbossong.nl/og.png"/>
-<meta name="google-site-verification" content="DCl7VAf9tcz6eD9gb67NfkNnJ1PKRNcg8qQiwpbx9Lk"/>
-<link rel="sitemap" type="application/xml" href="/sitemap/sitemap-index.xml"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Formats &amp; concepten | Sten Bossong</title>
 <link rel="icon" href="/favicon-32x32.png?v=6c85b9b8cec672504f47ac4abcd5989c" type="image/png"/>
-<link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/>
-<link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=6c85b9b8cec672504f47ac4abcd5989c"/>
-<style>html,body{margin:0;background:#FAF9F6}</style>
+<style>
+@font-face{font-family:'Calibre';src:url('/static/Calibre-Regular-b0d4cbb1201155ddccc21d1b8059a670.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Calibre';src:url('/static/Calibre-Medium-568dce56f869a519a015d3b69443b067.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Calibre';src:url('/static/Calibre-Semibold-94fc73852539d6733dc0d80252c5e3fb.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'SF Mono';src:url('/static/SFMono-Regular-8799e6387338d58f2f137df821c86eb4.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+:root{--navy:#FAF9F6;--slate:#2E2E2E;--light-slate:#444444;--line:#E3E0DA;--green:#FF3861;--font-sans:'Calibre','Inter','San Francisco','SF Pro Text',-apple-system,system-ui,sans-serif;--font-mono:'SF Mono','Fira Code','Fira Mono','Roboto Mono',monospace;--border-radius:8px;--transition:all .25s cubic-bezier(0.645,0.045,0.355,1)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--navy);color:var(--slate);font-family:var(--font-sans);font-size:20px;line-height:1.3;-webkit-font-smoothing:antialiased}
+main{max-width:1000px;margin:0 auto;padding:150px 150px 100px}
+@media (max-width:1080px){main{padding:150px 100px 100px}}
+@media (max-width:768px){main{padding:120px 50px 80px}}
+@media (max-width:480px){main{padding:100px 25px 60px}}
+h2{display:flex;align-items:center;margin:0 0 40px;font-size:clamp(26px,5vw,32px);font-weight:600;color:var(--slate);white-space:nowrap}
+h2::after{content:'';display:block;flex:1 1 auto;max-width:300px;height:1px;margin-left:20px;background:var(--line)}
+.btn{color:var(--green);background:transparent;border:1px solid var(--green);border-radius:var(--border-radius);padding:.75rem 1rem;font-family:var(--font-mono);font-size:13px;line-height:1;cursor:pointer;transition:var(--transition)}
+.btn:hover,.btn:focus-visible{box-shadow:3px 3px 0 0 var(--green);transform:translate(-4px,-4px);outline:none}
+#gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0 25px}
+#gate form{display:flex;flex-direction:column;gap:16px;width:100%;max-width:320px}
+#gate h2{margin-bottom:8px}
+#gate input{background:transparent;border:1px solid var(--line);border-radius:var(--border-radius);padding:.75rem 1rem;font-family:var(--font-mono);font-size:14px;color:var(--slate);letter-spacing:.2em}
+#gate input:focus{outline:none;border-color:var(--green)}
+#err{margin:0;color:var(--green);font-family:var(--font-mono);font-size:12px;min-height:14px}
+#content[hidden],#gate[hidden]{display:none}
+.cat{margin:0 0 60px}
+.cat h3{margin:0 0 20px;font-size:clamp(20px,3vw,24px);font-weight:600;color:var(--slate)}
+.cat ul{list-style:none;margin:0;padding:0}
+.cat li{display:flex;align-items:baseline;gap:20px;padding:16px 0;border-top:1px solid var(--line)}
+.cat li:last-child{border-bottom:1px solid var(--line)}
+.kind{flex:0 0 100px;font-family:var(--font-mono);font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:.5px}
+.name{font-size:20px;color:var(--slate)}
+</style>
 </head>
 <body>
-<div id="root"></div>
-<script src="/vendor/react.production.min.js"></script>
-<script src="/vendor/react-dom.production.min.js"></script>
-<script src="/app.js"></script>
+<div id="gate">
+  <form id="pinform" autocomplete="off">
+    <h2>Formats &amp; concepten</h2>
+    <input id="pin" type="password" inputmode="numeric" placeholder="Pincode" aria-label="Pincode" autofocus/>
+    <p id="err" role="alert"></p>
+    <button class="btn" type="submit">Openen</button>
+  </form>
+</div>
+<main id="content" hidden>
+  <h2>Formats &amp; concepten</h2>
+  <section class="cat">
+    <h3>Boeken</h3>
+    <ul>
+      <li><span class="kind">Non-fictie</span><span class="name">Oranje boven</span></li>
+      <li><span class="kind">Fictie</span><span class="name">Riense</span></li>
+    </ul>
+  </section>
+  <section class="cat">
+    <h3>Televisie formats</h3>
+  </section>
+</main>
+<script>
+(function(){
+  var H='286c897eba57ce67e79fff80229d9eacddde784b29a18a1d47c17bade5ad1a08';
+  var gate=document.getElementById('gate'),content=document.getElementById('content'),pin=document.getElementById('pin'),err=document.getElementById('err');
+  function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return('0'+b.toString(16)).slice(-2);}).join('');}
+  document.getElementById('pinform').addEventListener('submit',function(e){
+    e.preventDefault();
+    crypto.subtle.digest('SHA-256',new TextEncoder().encode(pin.value)).then(function(b){
+      if(hex(b)===H){gate.hidden=true;content.hidden=false;}
+      else{err.textContent='Onjuiste pincode.';pin.select();}
+    });
+  });
+  pin.addEventListener('input',function(){err.textContent='';});
+})();
+</script>
 </body>
 </html>
