@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://stenbossong.nl/sitemap.xml
+Host: https://stenbossong.nl

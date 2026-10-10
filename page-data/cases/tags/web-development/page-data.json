@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-templates-tag-js",
+    "path": "/cases/tags/web-development/",
+    "result": {"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"frontmatter":{"title":"Marketing strategie voor digitale marktplaats","description":"BikeFair.org","date":"2022-01-01T00:00:00.000Z","slug":"/cases/bikefair","tags":["SEO Strategie","Performance Marketing","Content automatisering","Technische SEO","Web development","Landingspagina’s","Conversie Optimalisatie","Lokale SEO","AI-gegenereerde content"]}}}]}},"pageContext":{"tag":"Web development"}},
+    "staticQueryHashes": ["1669914325","1994492073","2009693873","3576144955","380049031"]}

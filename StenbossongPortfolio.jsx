@@ -149,6 +149,21 @@ const BASE_CSS = `
     content: ''; display: block; position: relative; top: -5px;
     width: 300px; height: 1px; margin-left: 20px; background-color: var(--lightest-navy); flex-shrink: 1;
   }
+  .formats-head .numbered-heading::before { content: none; }
+  section.formats-head { padding: 0; }
+  section.formats-cat { padding: 0; margin: 0 auto 60px; }
+  .formats-cat-title { font-size: clamp(20px,3vw,26px); color: var(--slate); margin: 0 0 20px; font-weight: 600; }
+  .formats-list { list-style: none; padding: 0; margin: 0; }
+  .formats-item {
+    display: flex; align-items: baseline; gap: 20px;
+    padding: 16px 0; border-top: 1px solid var(--lightest-navy);
+  }
+  .formats-item:last-child { border-bottom: 1px solid var(--lightest-navy); }
+  .formats-kind {
+    font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--green);
+    flex: 0 0 90px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .formats-name { font-size: var(--fz-lg); color: var(--slate); }
 
   .numbered-heading.overline::before, .numbered-heading.overline::after { content: none; display: none; }
   #featured .numbered-heading::after { display: none; }
@@ -238,6 +253,12 @@ const BASE_CSS = `
     .sidebar nav ol li a:hover { color: var(--green); }
     .sidebar .resume-link { color: var(--green); background: transparent; border: 1px solid var(--green); border-radius: var(--border-radius); padding: 18px 50px; font-size: var(--fz-sm); font-family: var(--font-mono); line-height: 1; text-decoration: none; transition: var(--transition); margin: 10% auto 0; display: block; width: max-content; }
     .sidebar .resume-link:hover { box-shadow: 4px 4px 0 0 var(--green); transform: translate(-5px,-5px); color: var(--green); }
+    .sidebar .menu-portal-btn { cursor: pointer; margin-top: 20px; }
+    .sidebar .menu-portal-form { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 20px auto 0; width: max-content; }
+    .sidebar .menu-portal-form input { background: transparent; border: 1px solid var(--green); border-radius: var(--border-radius); padding: 14px 20px; font-size: var(--fz-sm); font-family: var(--font-mono); color: var(--slate); text-align: center; width: 180px; }
+    .sidebar .menu-portal-form button { color: var(--green); background: transparent; border: 1px solid var(--green); border-radius: var(--border-radius); padding: 14px 40px; font-size: var(--fz-sm); font-family: var(--font-mono); line-height: 1; cursor: pointer; transition: var(--transition); }
+    .sidebar .menu-portal-form button:hover { box-shadow: 4px 4px 0 0 var(--green); transform: translate(-5px,-5px); }
+    .sidebar .menu-portal-err { color: var(--green); font-family: var(--font-mono); font-size: var(--fz-xs); }
   }
 
   /* Side rails */
@@ -265,6 +286,16 @@ const BASE_CSS = `
   #hero p  { margin: 20px 0 0; max-width: 540px; }
   .main-button-link { color: var(--green); background: transparent; border: 1px solid var(--green); border-radius: var(--border-radius); padding: 1.25rem 1.75rem; font-size: var(--fz-sm); font-family: var(--font-mono); line-height: 1; text-decoration: none; display: inline-block; margin-top: 50px; transition: var(--transition); }
   .main-button-link:hover, .main-button-link:focus, .main-button-link:active { color: var(--green); box-shadow: 4px 4px 0 0 var(--green); transform: translate(-5px,-5px); }
+  .hero-buttons { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 50px; }
+  .hero-buttons .main-button-link { margin-top: 0; }
+  .main-button-dark { background: var(--slate); border-color: var(--slate); color: var(--navy); }
+  .main-button-dark:hover, .main-button-dark:focus, .main-button-dark:active { color: var(--navy); }
+  .nav-portal { position: relative; }
+  .nav-portal-btn { cursor: pointer; }
+  .nav-portal-pop { position: absolute; right: 0; top: calc(100% + 12px); display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 230px; padding: 12px; background: var(--light-navy); border: 1px solid var(--lightest-navy); border-radius: var(--border-radius); box-shadow: 0 10px 30px -15px rgba(0,0,0,0.25); z-index: 20; }
+  .nav-portal-pop input { flex: 1 1 0; min-width: 0; background: var(--navy); border: 1px solid var(--lightest-navy); border-radius: var(--border-radius); padding: 0.6rem 0.75rem; font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--slate); }
+  .nav-portal-pop button { color: var(--green); background: transparent; border: 1px solid var(--green); border-radius: var(--border-radius); padding: 0.6rem 0.8rem; font-family: var(--font-mono); font-size: var(--fz-xs); line-height: 1; cursor: pointer; }
+  .nav-portal-err { flex-basis: 100%; color: var(--green); font-family: var(--font-mono); font-size: var(--fz-xxs); }
 
   /* About */
   #about { max-width: 900px; min-height: 100vh; }
@@ -487,7 +518,15 @@ function Loader({ onDone }) {
 // ─── Menu ───────────────────────────────────────────────────────────────────
 function Menu() {
   const [open,setOpen]=useState(false);
+  const [askPin,setAskPin]=useState(false);
+  const [pin,setPin]=useState("");
+  const [err,setErr]=useState(false);
   const wrap=useRef(null);
+  const portalSubmit=useCallback(async(e)=>{
+    e.preventDefault();
+    const h=await sha256Hex(pin);
+    if(h===FORMATS_PIN_HASH){ window.location.href="/formats"; } else { setErr(true); }
+  },[pin]);
   useEffect(()=>{
     const onKey=(e)=>{ if(e.key==='Escape') setOpen(false); };
     const onResize=()=>{ if(window.innerWidth>768) setOpen(false); };
@@ -510,6 +549,20 @@ function Menu() {
             ))}
           </ol>
           <a href="https://stenbossong.nl/resume.pdf" className="resume-link" target="_blank" rel="noreferrer">Resume</a>
+          {!askPin ? (
+            <button type="button" className="resume-link menu-portal-btn" onClick={()=>{setAskPin(true); setErr(false);}}>Media Portaal</button>
+          ) : (
+            <form onSubmit={portalSubmit} className="menu-portal-form">
+              <input
+                type="password" inputMode="numeric" autoFocus value={pin}
+                onChange={e=>{setPin(e.target.value); setErr(false);}}
+                placeholder="Pincode"
+                aria-label="Pincode Media Portaal"
+              />
+              {err && <span className="menu-portal-err">Onjuiste pincode.</span>}
+              <button type="submit">Openen</button>
+            </form>
+          )}
         </nav>
       </aside>
     </div>
@@ -526,9 +579,40 @@ function Nav({ mounted }) {
       <div className="nav-links" style={{opacity:mounted?1:0,transition:'opacity 0.3s ease 0.3s'}}>
         <ol>{NAV_LINKS.map(({name,url})=>(<li key={name}><a href={url}><span>{name}</span></a></li>))}</ol>
         <a className="resume-button" href="https://stenbossong.nl/resume.pdf" target="_blank" rel="noreferrer">Download CV</a>
+        <NavPortal/>
       </div>
       <Menu/>
     </header>
+  );
+}
+function NavPortal() {
+  const [open,setOpen]=useState(false);
+  const [pin,setPin]=useState("");
+  const [err,setErr]=useState(false);
+  const wrap=useRef(null);
+  useEffect(()=>{
+    if(!open) return;
+    const onOut=(e)=>{ if(wrap.current&&!wrap.current.contains(e.target)) setOpen(false); };
+    const onKey=(e)=>{ if(e.key==='Escape') setOpen(false); };
+    document.addEventListener('mousedown',onOut); document.addEventListener('keydown',onKey);
+    return ()=>{ document.removeEventListener('mousedown',onOut); document.removeEventListener('keydown',onKey); };
+  },[open]);
+  const submit=useCallback(async(e)=>{
+    e.preventDefault();
+    const h=await sha256Hex(pin);
+    if(h===FORMATS_PIN_HASH){ window.location.href="/formats"; } else { setErr(true); }
+  },[pin]);
+  return (
+    <div className="nav-portal" ref={wrap}>
+      <button type="button" className="resume-button nav-portal-btn" onClick={()=>{setOpen(o=>!o); setErr(false);}}>Media Portaal</button>
+      {open && (
+        <form onSubmit={submit} className="nav-portal-pop">
+          <input type="password" inputMode="numeric" autoFocus value={pin} onChange={e=>{setPin(e.target.value); setErr(false);}} placeholder="Pincode" aria-label="Pincode Media Portaal"/>
+          <button type="submit">Openen</button>
+          {err && <span className="nav-portal-err">Onjuiste pincode.</span>}
+        </form>
+      )}
+    </div>
   );
 }
 
@@ -555,7 +639,10 @@ function Hero({ mounted }) {
     <h2 key="2" className="big-heading">Sten Bossong,</h2>,
     <h3 key="3" className="big-heading">{"let's"} ignite ambitions</h3>,
     <p  key="4">For media &amp; marketing performance</p>,
-    <a  key="5" className="main-button-link" href="https://flii.nl" target="_blank" rel="noreferrer">@ Flii Media</a>,
+    <div key="5" className="hero-buttons">
+      <a className="main-button-link" href="https://flii.nl" target="_blank" rel="noreferrer">@ Flii Media</a>
+      <a className="main-button-link main-button-dark" href="/formats">Media Portaal</a>
+    </div>,
   ];
   return (
     <section id="hero">
@@ -684,10 +771,89 @@ function Footer() {
 }
 
 // ─── App ────────────────────────────────────────────────────────────────────
+// ─── Formats & concepten (Media Portaal) ─────────────────────────────────────
+const FORMATS_PIN_HASH = "286c897eba57ce67e79fff80229d9eacddde784b29a18a1d47c17bade5ad1a08";
+async function sha256Hex(str){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function Formats() {
+  const [pin,setPin]=useState("");
+  const [ok,setOk]=useState(false);
+  const [err,setErr]=useState(false);
+  const submit=useCallback(async(e)=>{
+    e.preventDefault();
+    const h=await sha256Hex(pin);
+    if(h===FORMATS_PIN_HASH){ setOk(true); setErr(false); } else { setErr(true); }
+  },[pin]);
+  if(!ok){
+    return (
+      <div id="content">
+        <main className="fillHeight" style={{display:'flex',alignItems:'center',justifyContent:'center',minHeight:'100vh'}}>
+          <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:'20px',maxWidth:'320px',width:'100%',padding:'0 25px'}}>
+            <h2 className="numbered-heading">Formats &amp; concepten</h2>
+            <input
+              type="password" inputMode="numeric" autoFocus value={pin}
+              onChange={e=>{setPin(e.target.value); setErr(false);}}
+              placeholder="Pincode"
+              style={{background:'var(--light-navy)',border:'1px solid var(--lightest-navy)',borderRadius:'var(--border-radius)',padding:'0.75rem 1rem',color:'var(--slate)',fontFamily:'var(--font-mono)',fontSize:'var(--fz-sm)'}}
+            />
+            {err && <p style={{color:'var(--green)',fontFamily:'var(--font-mono)',fontSize:'var(--fz-xs)',margin:0}}>Onjuiste pincode.</p>}
+            <button type="submit" className="main-button-link" style={{marginTop:0,cursor:'pointer'}}>Openen</button>
+          </form>
+        </main>
+      </div>
+    );
+  }
+  return (
+    <div id="content">
+      <main className="fillHeight" style={{paddingTop:'150px',maxWidth:'1000px'}}>
+        <section className="formats-head">
+          <h2 className="numbered-heading">Formats &amp; concepten</h2>
+        </section>
+
+        <section className="formats-cat">
+          <h3 className="formats-cat-title">Boeken</h3>
+          <ul className="formats-list">
+            <li className="formats-item">
+              <span className="formats-kind">Non-fictie</span>
+              <span className="formats-name">Oranje boven</span>
+            </li>
+            <li className="formats-item">
+              <span className="formats-kind">Fictie</span>
+              <span className="formats-name">Riense</span>
+            </li>
+          </ul>
+        </section>
+
+        <section className="formats-cat">
+          <h3 className="formats-cat-title">Televisie formats</h3>
+          <ul className="formats-list"></ul>
+        </section>
+      </main>
+      <Footer/>
+    </div>
+  );
+}
+
 export default function App() {
   const [loading,setLoading]=useState(true);
   const [mounted,setMounted]=useState(false);
   const done=useCallback(()=>{ setLoading(false); setTimeout(()=>setMounted(true),100); },[]);
+  useEffect(()=>{
+    if(!mounted || !window.location.hash) return;
+    const t=setTimeout(()=>{ const el=document.getElementById(window.location.hash.slice(1)); if(el) el.scrollIntoView(); },350);
+    return ()=>clearTimeout(t);
+  },[mounted]);
+  const isFormats = typeof window!=="undefined" && window.location.pathname.replace(/\/$/,"")==="/formats";
+  if(isFormats){
+    return (
+      <>
+        <style>{FONT_FACES + BASE_CSS}</style>
+        <Formats/>
+      </>
+    );
+  }
   return (
     <>
       <style>{FONT_FACES + BASE_CSS}</style>
