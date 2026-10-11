@@ -36,6 +36,28 @@ h2::after{content:'';display:block;flex:1 1 auto;max-width:300px;height:1px;marg
 .cat li:last-child{border-bottom:1px solid var(--line)}
 .kind{flex:0 0 100px;font-family:var(--font-mono);font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:.5px}
 .name{font-size:20px;color:var(--slate)}
+.cat details{border-top:1px solid var(--line)}
+.cat details:last-child{border-bottom:1px solid var(--line)}
+.cat summary{display:flex;align-items:baseline;gap:20px;padding:16px 0;cursor:pointer;list-style:none}
+.cat summary::-webkit-details-marker{display:none}
+.cat summary .name{flex:1 1 auto}
+.cat summary::after{content:'+';font-family:var(--font-mono);font-size:16px;color:var(--green);transition:transform .25s cubic-bezier(0.645,0.045,0.355,1)}
+.cat details[open] summary::after{transform:rotate(45deg)}
+.cat summary:hover .name{color:var(--green)}
+.body{padding:0 0 22px 120px;max-width:640px}
+.body p{margin:0 0 14px;font-size:18px;line-height:1.45;color:var(--light-slate)}
+.label{margin:18px 0 8px;font-family:var(--font-mono);font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:.5px}
+.body ul,.body ol{margin:0;padding:0;list-style:none}
+.body li{display:block;padding:6px 0;border:0;font-size:17px;line-height:1.4;color:var(--light-slate)}
+.body ol{counter-reset:ep}
+.body ol li{counter-increment:ep;padding-left:34px;position:relative}
+.body ol li::before{content:counter(ep,decimal-leading-zero);position:absolute;left:0;top:8px;font-family:var(--font-mono);font-size:12px;color:var(--green)}
+.body li b{color:var(--slate);font-weight:500}
+.group{margin:34px 0 10px;font-family:var(--font-mono);font-size:12px;color:var(--light-slate);text-transform:uppercase;letter-spacing:.5px}
+.cat h3+.group{margin-top:0}
+.cat details:has(+ .group){border-bottom:1px solid var(--line)}
+@media (max-width:600px){.body{padding-left:0}.kind{flex-basis:84px}}
+
 </style>
 </head>
 <body>
@@ -52,12 +74,26 @@ h2::after{content:'';display:block;flex:1 1 auto;max-width:300px;height:1px;marg
   <section class="cat">
     <h3>Boeken</h3>
     <ul>
-      <li><span class="kind">Non-fictie</span><span class="name">Oranje boven</span></li>
       <li><span class="kind">Fictie</span><span class="name">Riense</span></li>
     </ul>
   </section>
   <section class="cat">
     <h3>Televisie formats</h3>
+<div class="group">Documentaire &amp; reportage</div>
+<details><summary><span class="kind">Docu</span><span class="name">Oranje (onderste) boven</span></summary><div class="body"><p>Staat Nederland op zijn kop? Over migratie als doelbewust beleid, de onvrede die zichtbaar is in het hoge aantal PVV-stemmers, en hoe Nederland voorop loopt in gecontroleerd globaliseren, en daarom ook de baas van de wereld mag zijn (Rutte, NAVO).</p><div class="label">Opbouw</div><ul><li><b>Proloog: De vlag ondersteboven</b>. De omgekeerde vlag van de boeren als noodsignaal.</li><li><b>Deel I: Wat is Nederlands?</b> Water, handel en polder. Fatsoen als exportproduct.</li><li><b>Deel II: Wat verschuift</b>. Rituelen onder druk. Het platteland haakt af. Ver weg en dichtbij.</li><li><b>Deel III: Wie erbij komen</b>. Drie routes naar Nederland. Aanpassen of thuis houden. Waarom de deur openstaat.</li><li><b>Deel IV: Onderste boven</b>. Barmhartigheid met een grens. Nederland in de spiegel. Nederlanders elders.</li><li><b>Slot: Oranje boven</b>. Leiderschap dat menselijk maar onverbiddelijk is, Nederland als symbolisch wereldleider en sterkste nummer twee, en de vlag weer rechtop.</li></ul></div></details>
+<details><summary><span class="kind">Docu</span><span class="name">Rechts van het midden</span></summary><div class="body"><p>Begint bij de vraag wat normaal is, en zoekt uit waarom de stille meerderheid snakt naar een sterke leider (Wilders) die zowel likeable als streng kan zijn (Rutte).</p><div class="label">Lijn</div><ol><li><b>Groener gras</b>: we zoeken constant naar groener gras, omdat te veel nieuwe invloeden ons fundament en onze vastigheden laten verdwijnen.</li><li><b>Van links naar rechts</b>: traditioneel ontwikkel je je langzaam van jong (onderaan de hiërarchie) en links naar oud (bovenaan) en rechts. Zo hoort het politieke systeem te werken, als sociale mobiliteit werkt en men stemt voor eigen belang.</li><li><b>Verenigen en verdedigen</b>: door de overmatige invloed van buitenaf in mensen, gebruiken en informatie moet de gevestigde orde zich verenigen en verdedigen. Daarvoor is macht nodig: cultuur alleen verdedig je niet als je op de arbeids- of woningmarkt wordt weggecijferd.</li><li><b>Toelaten op voorwaarde</b>: tegelijk leert de gevestigde orde mensen toelaten. Niet uit onvoorwaardelijke inclusiviteit, maar omdat zij consequent laten zien dat ze aan de gestelde norm willen voldoen.</li></ol></div></details>
+<details><summary><span class="kind">Reportage</span><span class="name">Voor goed mag je alles doen</span></summary><div class="body"><p>Reportageserie die lastige maatschappelijke kwesties vol aangaat, zonder vooraf te weten waar het eindigt.</p><div class="label">Afleveringen</div><ol><li><b>Woningnood</b>: waarom de woningprijzen zo hoog zijn, en welke oplossingen er liggen.</li><li><b>Onderste boven</b>: over onterechte regeldruk rond klimaat en innovatie op boeren.</li><li><b>Transgender</b>: wat maakt een man man en een vrouw vrouw, nu globalisering, technologie en migratie vaste categorieën losser maken? Op zoek naar een duidelijke, simpele benadering.</li><li><b>Illegaal</b>: hoeveel ongedocumenteerden er zijn, hoe realistisch die schattingen zijn, en waar en hoe zij werken en leven.</li><li><b>Media aan de macht</b>: over de kracht van het verhaal, en waarom binding (wij tegen zij) zwaarder weegt dan feiten.</li><li><b>Sociaal construct</b>: is onze maatschappij bedacht, of een gevolg van evolutie?</li><li><b>Cultuur, niet kleur</b>: wat Nederlandse cultuur is, onze geschiedenis platgeslagen: geloof, handel, het poldermodel en een platte hiërarchie, tegenover culturen met een ander geloof, weinig handel, dictatuur of slechte organisatie en oneerlijke machtsverhoudingen. Wat we racisme noemen, werkt zo niet: het is een biologische reactie, met een basis in een waarheid die we allemaal voelen maar niet altijd kunnen onderbouwen. De Nederlandse cultuur is superieur: mensen komen hierheen, en niet andersom. Dat verschil herleid je niet tot kleur, maar tot cultuur. Nederlandse normen en waarden zijn gebouwd op een joods-christelijke achtergrond, dus iemand met een islamitische cultuur heeft meer aanpassing nodig, en mag daarop gewezen worden, dan een christen uit Zuid-Soedan of een boer uit Zuid-Afrika.</li><li><b>Dag Sinterklaasje</b>: over de teruglopende viering onder jongeren, en de oplossing: roetveegpiet. Wat het metaforische verhaal betekende in de tijd van ontstaan: een witte man (arbeider) komt rijk terug uit het beloofde land (Spanje of Turkije) en deelt cadeaus uit aan brave kinderen. De oude traditie droeg waarden die nu onpopulair zijn, maar o zo gezond: kinderen angst aanjagen (denk aan de enge Karbonkel, die kinderen het lezen wilde afpakken) en laten schrikken, wat openstelt voor persoonlijke groei.</li></ol></div></details>
+<details><summary><span class="kind">Docu</span><span class="name">RAARRR</span></summary><div class="body"><p>Docureportage over excentrieke, volkse mensen die bekend zijn in hun buurt. Onder de oppervlakte spelen vaak mentale problemen, maar we zetten ze neer alsof ze heel normaal zijn: gewoon een bakkie doen, met een camera erbij.</p></div></details>
+<details><summary><span class="kind">Docu</span><span class="name">De vader, de zoon en de heilige geest</span></summary><div class="body"><p>De metafoor belichaamd in de werkelijkheid: vaders die hun zonen goed opvoeden, houden de positieve geest van vooruitgang gaande.</p><div class="label">Opzet</div><ul><li>Interviews met oude en jonge vaders.</li><li>Vader-zoonruzies worden voor de camera hersteld.</li></ul></div></details>
+<details><summary><span class="kind">Portret</span><span class="name">Zo vader, zo zoon</span></summary><div class="body"><p>Zonen van bekende vaders kijken terug op het werk van hun vader, en laten zien wat ze hetzelfde of juist heel anders doen.</p><div class="label">Opzet</div><ul><li>Portretserie, één vader-zoonverhaal per aflevering.</li><li>Beoogde gasten: o.a. Royce, Richie, Jordi en Johnny de Mol.</li></ul></div></details>
+<div class="group">Debat</div>
+<details><summary><span class="kind">Debat</span><span class="name">1 vs. 10</span></summary><div class="body"><p>Een ideeënstrijd zonder één winnaar: geen wedstrijd, maar een zoektocht naar de waarheid.</p><div class="label">Opzet</div><ul><li>Kernvragen: Wat is Nederland? Wie is een Nederlander? Wat is de rol van Nederland in de wereld?</li><li>Deelnemers brengen een probleem en een oplossing, en liggen daarmee onder vuur.</li></ul></div></details>
+<details><summary><span class="kind">Debat</span><span class="name">Het vizier</span></summary><div class="body"><p>Politiek panel waarin beide kanten van het politieke spectrum worden uitgenodigd om over een specifiek issue te praten.</p><div class="label">Opzet</div><ul><li><b>Individuele ronde</b>: elke kant deelt zijn kant van het verhaal.</li><li><b>Teamronde</b>: samen op zoek naar de waarheid.</li></ul></div></details>
+<div class="group">Shows</div>
+<details><summary><span class="kind">Pitchshow</span><span class="name">Genadeloos goed</span></summary><div class="body"><p>Het beste idee voor Nederland: wie het sterkste plan pitcht, wint het geld om het te verwezenlijken.</p><div class="label">Opzet</div><ul><li>Uitvoerbare plannen voor politieke en maatschappelijke kwesties.</li><li>Elk plan komt met uitleg, plan van aanpak en begroting.</li><li>Keihard en genadeloos beoordeeld.</li></ul></div></details>
+<details><summary><span class="kind">Gameshow</span><span class="name">The Race</span></summary><div class="body"><p>Gameshow gebouwd op een fundament van roasting: sporters uit verschillende disciplines, brute waarheid en felle competitie.</p><div class="label">Opzet</div><ul><li>Host: Mr. Nederland, een man met een ijzersterk oordeel.</li><li>Panel 2 tegen 2.</li></ul></div></details>
+<details><summary><span class="kind">Gameshow</span><span class="name">Onze taal</span></summary><div class="body"><p>Wie bij Team Nederland wil horen, laat dat zien in de taal. Een gameshow die correct Nederlands viert: we hebben een bijzondere taal, dus laten we er een mooie wedstrijd van maken.</p><div class="label">Opzet</div><ul><li>Werktitel ook: Taal is echt ons ding.</li><li>Rondes: spelling, obscure gebruiken, etymologie en zinsconstructies.</li></ul></div></details>
+<details><summary><span class="kind">Show</span><span class="name">Heldendaad</span></summary><div class="body"><p>Welke problemen loop je tegen aan? Wij lossen ze op.</p><div class="label">Opzet</div><ul><li>Elke oplossing technisch volledig correct, en teruggebracht tot iets begrijpelijks.</li></ul></div></details>
   </section>
 </main>
 <script>
