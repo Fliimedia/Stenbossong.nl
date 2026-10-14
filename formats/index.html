@@ -73,13 +73,23 @@ h2::after{content:'';display:block;flex:1 1 auto;max-width:300px;height:1px;marg
 .body p,.body li,.cands li,.ftable,.ftable td{font-size:17px!important;line-height:1.45}
 .body .ex,.note,.cands .a,.name .meta{font-size:14px!important}
 .body ul>li{position:relative;padding-left:20px!important}
-.body ul>li::before{content:'';position:absolute;left:0;top:17px;width:9px;height:1px;background:var(--green)}
+.body ul>li::before{content:'';position:absolute;left:0;top:17px;width:9px;height:0;border-top:1px solid var(--green)}
 .cands>li{padding-left:0!important}.cands>li::before{display:none}
-.cat details[open]>summary{position:sticky;top:0;z-index:2;background:var(--navy);box-shadow:0 1px 0 var(--line)}
+.cat details[open]>summary{position:sticky;top:0;z-index:2;background:var(--navy);padding-bottom:18px}
 .fold{display:block;margin:18px 0 6px;padding:0;background:none;border:0;cursor:pointer;font-family:var(--font-mono);font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--green)}
 .fold:hover{text-decoration:underline}
 .home{display:inline-block;margin:0 0 28px;font-family:var(--font-mono);font-size:13px;color:var(--light-slate);text-decoration:none}
 .home:hover{color:var(--green)}
+.body{padding-top:4px}
+.body ul,.body ol{margin:0 0 16px!important}
+.body p{margin:0 0 14px!important}
+.body .label{margin:26px 0 10px!important}
+.body .label:first-child{margin-top:0!important}
+.ftable{margin:4px 0 20px!important}
+.ftable td{border-bottom:0!important;padding-top:6px!important;padding-bottom:6px!important}
+.ftable th{border-bottom:1px solid var(--line)!important;padding-bottom:8px!important}
+.ftable tbody tr:first-child td{padding-top:10px!important}
+.note{margin-top:4px!important}
 </style>
 </head>
 <body>
