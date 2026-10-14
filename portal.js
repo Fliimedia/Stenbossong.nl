@@ -5,7 +5,8 @@
     var cv = document.querySelector('header a.resume-button');
     if (!cv || !cv.parentNode || !cv.parentNode.parentNode) return;
     var links = cv.parentNode.parentNode;
-    if (links.querySelector('[data-portal]')) return;
+    var ex = links.querySelector('[data-portal] a');
+    if (ex) { if (ex.textContent !== LABEL) ex.textContent = LABEL; return; }
     var wrap = document.createElement('div');
     wrap.setAttribute('data-portal', '');
     wrap.className = 'portal-fade';
@@ -20,7 +21,8 @@
     var r = document.querySelector('header aside a.resume-link');
     if (!r || !r.parentNode) return;
     var nav = r.parentNode;
-    if (nav.querySelector('[data-portal]')) return;
+    var em = nav.querySelector('a[data-portal]');
+    if (em) { if (em.textContent !== LABEL) em.textContent = LABEL; return; }
     var a = document.createElement('a');
     a.className = 'resume-link portal-mobile';
     a.href = HREF;
