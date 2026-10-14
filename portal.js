@@ -1,5 +1,5 @@
 (function () {
-  var LABEL = 'Media Portaal';
+  var LABEL = 'Concepten';
   var HREF = '/formats/';
   function addDesktop() {
     var cv = document.querySelector('header a.resume-button');
