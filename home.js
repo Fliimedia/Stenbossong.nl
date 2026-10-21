@@ -31,7 +31,8 @@
   '.sb-tl:before,.sb-tl .sb-prog{content:"";position:absolute;left:11px;top:6px;width:2px;border-radius:2px}' +
   '.sb-tl:before{bottom:6px;background:rgba(46,46,46,.12)}' +
   '.sb-tl .sb-prog{height:0;background:var(--green);transition:height .2s linear}' +
-  '.sb-it{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:28px;align-items:start;padding:0 0 64px}' +
+  '.sb-it{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:start;padding:0 0 72px}' +
+  '.sb-draw{width:100%!important;max-width:640px}.sb-draw canvas{display:block;width:100%;height:auto;max-width:100%}' +
   '.sb-it:last-child{padding-bottom:10px}' +
   '.sb-dot{position:absolute;left:-41px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--navy);border:2px solid rgba(46,46,46,.25);transition:border-color .4s,background .4s,transform .4s}' +
   '.sb-it.in .sb-dot{border-color:var(--green);background:var(--green);transform:scale(1.15);box-shadow:0 0 0 5px rgba(255,56,97,.12)}' +
@@ -42,7 +43,7 @@
   '.sb-t .at{color:var(--green)}.sb-t a{color:var(--green);text-decoration:none}' +
   '.sb-t a:hover{text-decoration:underline;text-underline-offset:3px}' +
   '.sb-sub{margin:6px 0 0;font-family:var(--font-mono);font-size:var(--fz-sm);color:var(--light-slate)}' +
-  '.sb-art{width:210px;opacity:0;transition:opacity .4s .15s}' +
+  '.sb-art{width:230px;max-width:100%;opacity:0;transition:opacity .4s .15s}' +
   '.sb-it.in .sb-art{opacity:1}' +
   '.sk{display:block;width:100%;height:auto;overflow:visible}' +
   '.sk .rough{filter:url(#sb-rough)}' +
@@ -258,13 +259,13 @@
 
   var STEPS = [
     { d: '1992', t: 'Geboren in Aalsmeer', a: 'birth' },
-    { d: '2009', t: 'Afgestudeerd Atheneum <span class="at">@ KKC</span>', a: 'grad1' },
-    { d: '2012', t: 'Afgestudeerd Bsc. Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2' },
-    { d: '2014–15', t: 'Reis rond de wereld van 14 maanden', a: 'world' },
-    { d: '2018 · jan.', t: 'Kick-start carrière <a href="https://imlounge.nl" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal' },
+    { d: '2009', t: 'Afgestudeerd Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
+    { d: '2012', t: 'Afgestudeerd Bsc. Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
+    { d: '2014–15', t: 'Reis rond de wereld van 14 maanden', a: 'world', img: 'world', h: 504 },
+    { d: '2018 · jan.', t: 'Kick-start carrière <a href="https://imlounge.nl" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
     { d: '2020 · apr.', t: 'Transfer <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', s: 'Global performance marketeer', a: 'globe' },
-    { d: '2021 · mei', t: 'Chief marketing officer <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">@ BikeFair</a>', s: '&amp; oprichting Flii Media', a: 'bike' },
-    { d: '2026 · apr.', t: 'Celebrating 5 years <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">@ Flii</a>', s: '<span class="cnt" data-n="40">40</span>+ clients, <span class="cnt" data-n="84">84</span> projects', a: 'party' }
+    { d: '2021 · mei', t: 'Chief marketing officer <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">@ BikeFair</a>', s: '&amp; oprichting Flii Media', a: 'bike', img: 'bike', h: 678 },
+    { d: '2026 · apr.', t: 'Celebrating 5 years <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">@ Flii</a>', s: '<span class="cnt" data-n="40">40</span>+ clients, <span class="cnt" data-n="84">84</span> projects', a: 'party', img: 'flii', h: 678 }
   ];
 
   var io = null;
@@ -280,6 +281,33 @@
     var am = li.querySelector('.am');
     if (am && am.beginElement) { try { am.beginElement(); } catch (e) {} }
     li.querySelectorAll('.cnt').forEach(count);
+    var dr = li.querySelector('.sb-draw'); if (dr) drawIn(dr);
+  }
+
+  /* realistische tekening die zichzelf intekent: elke inktpixel heeft een moment (order-map) */
+  function img(src) { return new Promise(function (ok, no) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = no; i.src = src; }); }
+  function drawIn(box) {
+    if (box.getAttribute('data-go')) return; box.setAttribute('data-go', '1');
+    var k = box.getAttribute('data-img'), cv = box.querySelector('canvas'), cx = cv.getContext('2d'), W = cv.width, H = cv.height;
+    var base = '/assets/tijdlijn/' + k;
+    Promise.all([img(base + '.webp?v=1'), img(base + '-order.png?v=1')]).then(function (a) {
+      var t = document.createElement('canvas'); t.width = W; t.height = H; var tc = t.getContext('2d');
+      tc.drawImage(a[0], 0, 0, W, H); var src = tc.getImageData(0, 0, W, H).data;
+      tc.clearRect(0, 0, W, H); tc.drawImage(a[1], 0, 0, W, H); var od = tc.getImageData(0, 0, W, H).data;
+      var buckets = []; for (var b = 0; b < 256; b++) buckets.push([]);
+      for (var p = 0; p < W * H; p++) { var v = od[p * 4]; if (v > 0) buckets[v].push(p); }
+      var out = cx.createImageData(W, H), d = out.data;
+      for (var q = 0; q < W * H; q++) { d[q * 4] = 250; d[q * 4 + 1] = 249; d[q * 4 + 2] = 246; d[q * 4 + 3] = 255; }
+      function paint(f, to) { for (var b = f; b <= to; b++) { var L = buckets[b]; for (var i = 0; i < L.length; i++) { var x = L[i] * 4; d[x] = src[x]; d[x + 1] = src[x + 1]; d[x + 2] = src[x + 2]; } } }
+      if (reduce) { paint(1, 255); cx.putImageData(out, 0, 0); return; }
+      var t0 = null, done = 0, DUR = 6000;
+      function f(ts) {
+        if (!t0) t0 = ts; var k2 = Math.min(1, (ts - t0) / DUR), e = k2 < .5 ? 2 * k2 * k2 : 1 - Math.pow(-2 * k2 + 2, 2) / 2, lim = Math.floor(1 + e * 254);
+        if (lim > done) { paint(done + 1, lim); done = lim; cx.putImageData(out, 0, 0); }
+        if (k2 < 1) requestAnimationFrame(f);
+      }
+      requestAnimationFrame(f);
+    }).catch(function () { box.style.display = 'none'; });
   }
 
   function doTimeline() {
@@ -291,7 +319,8 @@
     ol.innerHTML = '<span class="sb-prog" aria-hidden="true"></span><ol class="sb-list">' + STEPS.map(function (s) {
       return '<li class="sb-it"><span class="sb-dot" aria-hidden="true"></span><div class="sb-txt"><span class="sb-date">' + s.d + '</span>' +
         '<h3 class="sb-t">' + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + '</div>' +
-        '<div class="sb-art">' + ART[s.a] + '</div></li>';
+        (s.img ? '<div class="sb-art sb-draw" data-img="' + s.img + '"><canvas width="900" height="' + s.h + '" aria-hidden="true"></canvas></div>'
+               : '<div class="sb-art">' + ART[s.a] + '</div>') + '</li>';
     }).join('') + '</ol>';
     if (h && h.nextSibling) sec.insertBefore(ol, h.nextSibling); else sec.appendChild(ol);
     var items = ol.querySelectorAll('.sb-it');
