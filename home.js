@@ -319,7 +319,7 @@
 
   var STEPS = [
     { d: '1992', t: 'Geboren <span class="at">@ Aalsmeer</span>', a: 'birth', img: 'aalsmeer', h: 678 },
-    { d: 't/m 2009', t: 'Opgegroeid in Amstelveen', a: 'birth', img: 'noorddammer', h: 678 },
+    { d: 't/m 2009', t: 'Opgegroeid <span class="at">@ Amstelveen</span>', a: 'birth', img: 'noorddammer', h: 678 },
     { d: '2009', t: 'Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
     { d: '2012', t: 'Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
     { d: '2014–15', t: 'Reis <span class="at">@ Wereld</span>', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
