@@ -313,7 +313,8 @@
   };
 
   var STEPS = [
-    { d: '1992', t: 'Geboren in Aalsmeer', a: 'birth' },
+    { d: '1992', t: 'Geboren in Aalsmeer', a: 'birth', img: 'aalsmeer', h: 678 },
+    { d: 't/m 2009', t: 'Opgegroeid aan de Noorddammerlaan', a: 'birth', img: 'noorddammer', h: 678 },
     { d: '2009', t: 'Afgestudeerd Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
     { d: '2012', t: 'Afgestudeerd Bsc. Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
     { d: '2014–15', t: 'Reis rond de wereld van 14 maanden', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
