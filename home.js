@@ -318,13 +318,13 @@
   };
 
   var STEPS = [
-    { d: '1992', t: 'Geboren in Aalsmeer', a: 'birth', img: 'aalsmeer', h: 678 },
-    { d: 't/m 2009', t: 'Opgegroeid aan de Noorddammerlaan', a: 'birth', img: 'noorddammer', h: 678 },
-    { d: '2009', t: 'Diploma, Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
-    { d: '2012', t: 'Bsc., Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
-    { d: '2014–15', t: 'Wereldreis', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
-    { d: '2018 · jan.', t: 'Kick-start carrière <a href="https://www.dutchitleaders.nl/news/173633/ace-breidt-verder-uit-met-media-performance-agency-im-lounge" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
-    { d: '2020 · apr.', t: 'Transfer <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', s: 'Global performance marketeer', a: 'globe', img: 'beyonddutch', h: 678 },
+    { d: '1992', t: 'Geboren <span class="at">@ Aalsmeer</span>', a: 'birth', img: 'aalsmeer', h: 678 },
+    { d: 't/m 2009', t: 'Opgegroeid in Amstelveen', a: 'birth', img: 'noorddammer', h: 678 },
+    { d: '2009', t: 'Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
+    { d: '2012', t: 'Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
+    { d: '2014–15', t: 'Reis <span class="at">@ Wereld</span>', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
+    { d: '2018 · jan.', t: 'Kick-start <a href="https://www.dutchitleaders.nl/news/173633/ace-breidt-verder-uit-met-media-performance-agency-im-lounge" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
+    { d: '2020 · apr.', t: 'Global performance <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', a: 'globe', img: 'beyonddutch', h: 678 },
     { d: '2021 · mei', t: 'Chief marketing officer <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">@ BikeFair</a>', s: '&amp; oprichting Flii Media', a: 'bike', img: 'bike', h: 678 },
     { d: '2026 · apr.', t: 'Celebrating 5 years <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">@ Flii</a>', s: '<span class="cnt" data-n="40">40</span>+ clients, <span class="cnt" data-n="84">84</span> projects', a: 'party', img: 'flii', h: 678 }
   ];
