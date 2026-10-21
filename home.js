@@ -201,7 +201,7 @@
       '<h3 class="big-heading sbh-in d2">Tijd voor <span class="sbh-rot" aria-live="polite">' +
       WORDS.map(function (w, i) { return '<span class="sbh-w"' + (i ? ' aria-hidden="true"' : '') + '>' + w + '</span>'; }).join('') +
       '</span></h3>' +
-      '<p class="sbh-sub sbh-in d3">Voor media, marketing &amp; meer.</p>';
+      '<p class="sbh-sub sbh-in d3">Media, marketing &amp; meer.</p>';
     sec.insertBefore(box, anchor);
     var rot = box.querySelector('.sbh-rot'), ws = rot.querySelectorAll('.sbh-w');
     setTimeout(function () { ws[0].classList.add('on'); }, reduce ? 0 : 450);
@@ -570,7 +570,20 @@
     adr.parentNode.insertBefore(c, adr.nextSibling);
   }
 
-  function run() { addCSS(); doFooter(); doHero(); doTimeline(); doCases(); doProjects(); doArchive(); }
+  function doAbout() {
+    var sec = document.getElementById('about'); if (!sec) return;
+    var txt = sec.querySelector('[class*="StyledText"]'); if (!txt || txt.querySelector('.sb-about')) return;
+    var orig = txt.querySelector(':scope > div'), skills = txt.querySelector('.skills-list');
+    if (!orig) return;
+    orig.style.display = 'none'; if (skills) skills.style.display = 'none';
+    var d = document.createElement('div'); d.className = 'sb-about';
+    d.innerHTML = '<p>Ik ben 34 jaar oud, ondernemer in media en gepassioneerd over groei, innovatie en resultaat. Geboren en getogen in Amstelveen. Welkom bij mijn portfolio.</p>' +
+      '<p>Ik begon als consultant bij een <a href="https://imlounge.nl" target="_blank" rel="noopener noreferrer">mediabureau</a>, werd global performance marketeer voor een <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">scale-up</a> en was CMO van een <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">digitale marktplaats</a>.</p>' +
+      '<p>Inmiddels help ik merken met mijn bureau <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">Flii Media</a>, samen met een vertrouwd netwerk aan freelancers.</p>';
+    txt.insertBefore(d, orig);
+  }
+
+  function run() { addCSS(); doFooter(); doAbout(); doHero(); doTimeline(); doCases(); doProjects(); doArchive(); }
   var pend = 0;
   function sched() { if (pend) return; pend = setTimeout(function () { pend = 0; run(); }, 30); }
 
