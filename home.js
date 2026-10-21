@@ -117,7 +117,8 @@
   }
 
   /* ---------- hero ---------- */
-  var WORDS = ['verbinding', 'verhalen', 'resultaat', 'Jou'];
+  var WORDS = ['verbinding', 'verhalen', 'resultaat'];
+  var HOLD = [2000, 3000, 5000];
   var heroTimer = null;
 
   function doHero() {
@@ -144,15 +145,18 @@
     var rot = box.querySelector('.sbh-rot'), ws = rot.querySelectorAll('.sbh-w');
     setTimeout(function () { ws[0].classList.add('on'); }, reduce ? 0 : 450);
     var cur = 0;
-    if (heroTimer) clearInterval(heroTimer);
-    heroTimer = setInterval(function () {
-      if (!document.body.contains(rot)) { clearInterval(heroTimer); return; }
-      var nxt = (cur + 1) % ws.length, a = ws[cur], b = ws[nxt];
-      a.classList.remove('on'); a.classList.add('off'); a.setAttribute('aria-hidden', 'true');
-      b.removeAttribute('aria-hidden');
-      setTimeout(function () { a.classList.remove('off'); b.classList.add('on'); }, reduce ? 0 : 650);
-      cur = nxt;
-    }, 3800);
+    if (heroTimer) clearTimeout(heroTimer);
+    function step() {
+      heroTimer = setTimeout(function () {
+        if (!document.body.contains(rot)) return;
+        var nxt = (cur + 1) % ws.length, a = ws[cur], b = ws[nxt];
+        a.classList.remove('on'); a.classList.add('off'); a.setAttribute('aria-hidden', 'true');
+        b.removeAttribute('aria-hidden');
+        setTimeout(function () { a.classList.remove('off'); b.classList.add('on'); }, reduce ? 0 : 650);
+        cur = nxt; step();
+      }, HOLD[cur] + (reduce ? 0 : 1100));
+    }
+    step();
   }
 
   /* ---------- schetsen ---------- */
