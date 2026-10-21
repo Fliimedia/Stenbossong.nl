@@ -91,7 +91,7 @@
   '.sb-rows li{margin:0;padding:0;border-bottom:1px solid rgba(46,46,46,.14)}' +
   '.sb-rows li:before{display:none!important}' +
   '.sb-row{display:grid;grid-template-columns:96px minmax(0,1fr) 28px;gap:24px;align-items:baseline;padding:22px 4px;color:var(--slate);text-decoration:none!important;transition:background .25s var(--easing)}' +
-  '.sb-row:hover,.sb-row:focus-visible{background:rgba(255,56,97,.04);outline:none}' +
+  '.sb-row{-webkit-tap-highlight-color:transparent}.sb-row:focus-visible{outline:none}' +
   '.sb-r-meta{font-family:var(--font-mono);font-size:var(--fz-xs);color:var(--green);letter-spacing:.04em}' +
   '.sb-r-title{display:block;font-size:var(--fz-xxl);font-weight:500;line-height:1.25;color:var(--slate);transition:color .25s}' +
   '.sb-row:hover .sb-r-title{color:var(--green)}' +
@@ -108,13 +108,14 @@
   '.sb-route .rdot{fill:#FF3861;stroke:#FAF9F6;stroke-width:1.5}' +
   '.sb-route .rlab{font-family:var(--font-mono);font-size:19px;fill:#2E2E2E;paint-order:stroke;stroke:#FAF9F6;stroke-width:4px;stroke-linejoin:round;opacity:0;transition:opacity .45s}.sb-route .rlab.on{opacity:1}' +
   '.sb-more{display:inline-block;margin-top:10px;font-family:var(--font-mono);font-size:var(--fz-xs);color:var(--green);text-decoration:none;text-underline-offset:4px}.sb-more:hover,.sb-more:focus-visible{text-decoration:underline;outline:none}' +
+  '.sb-credit{margin-top:8px;text-align:center;font-family:var(--font-mono);font-size:var(--fz-xxs);line-height:1}.sb-credit a{color:var(--light-slate);text-decoration:none}.sb-credit a:hover{color:var(--green)}' +
   '.sb-tbtn{display:inline-flex;align-items:center;gap:5px;margin-left:12px;padding:3px 8px;border:1px solid rgba(255,56,97,.45);border-radius:4px;background:none;color:var(--green);font-family:var(--font-mono);font-size:var(--fz-xxs);cursor:pointer;vertical-align:middle;transition:background .2s}' +
   '.sb-tbtn:hover,.sb-tbtn:focus-visible{background:rgba(255,56,97,.08);outline:none}.sb-tbtn span{display:inline-block;transition:transform .25s}.sb-tbtn.open span{transform:rotate(180deg)}' +
   'tr.sb-tools-row td{padding-top:0!important}' +
   '.sb-tlist{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:6px 8px}' +
   '.sb-tlist li{margin:0;padding:4px 10px;border-radius:999px;background:rgba(46,46,46,.06);font-family:var(--font-mono);font-size:var(--fz-xxs);color:var(--light-slate)}' +
   '.sb-tlist li:before{display:none!important}' +
-  'tr.sb-target td{background:rgba(255,56,97,.07);transition:background 1.2s}' +
+  '.sb-tname{cursor:pointer;-webkit-tap-highlight-color:transparent}.sb-tname:hover,.sb-tname:focus-visible{color:var(--green);outline:none}' +
   '@media (max-width:768px){.sb-tl{padding-left:40px}.sb-tl:before,.sb-tl .sb-prog{left:8px}.sb-dot{left:-38px}' +
   '.sb-it{grid-template-columns:1fr;gap:16px;padding-bottom:52px}.sb-art{width:min(230px,80%)}.sb-t{font-size:var(--fz-xl)}}' +
   '@media (prefers-reduced-motion:reduce){.sb-txt,.sb-art{opacity:1!important;transform:none!important;transition:none!important}' +
@@ -319,10 +320,10 @@
   var STEPS = [
     { d: '1992', t: 'Geboren in Aalsmeer', a: 'birth', img: 'aalsmeer', h: 678 },
     { d: 't/m 2009', t: 'Opgegroeid aan de Noorddammerlaan', a: 'birth', img: 'noorddammer', h: 678 },
-    { d: '2009', t: 'Afgestudeerd Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
-    { d: '2012', t: 'Afgestudeerd Bsc. Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
-    { d: '2014–15', t: 'Reis rond de wereld van 14 maanden', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
-    { d: '2018 · jan.', t: 'Kick-start carrière <a href="https://imlounge.nl" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
+    { d: '2009', t: 'Diploma, Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
+    { d: '2012', t: 'Bsc., Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
+    { d: '2014–15', t: 'Wereldreis', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
+    { d: '2018 · jan.', t: 'Kick-start carrière <a href="https://www.dutchitleaders.nl/news/173633/ace-breidt-verder-uit-met-media-performance-agency-im-lounge" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
     { d: '2020 · apr.', t: 'Transfer <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', s: 'Global performance marketeer', a: 'globe', img: 'beyonddutch', h: 678 },
     { d: '2021 · mei', t: 'Chief marketing officer <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">@ BikeFair</a>', s: '&amp; oprichting Flii Media', a: 'bike', img: 'bike', h: 678 },
     { d: '2026 · apr.', t: 'Celebrating 5 years <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">@ Flii</a>', s: '<span class="cnt" data-n="40">40</span>+ clients, <span class="cnt" data-n="84">84</span> projects', a: 'party', img: 'flii', h: 678 }
@@ -545,28 +546,31 @@
         var name = t.textContent.trim();
         tr.id = slug(name);
         var list = tools[name]; if (!list) return;
-        var btn = document.createElement('button');
-        btn.type = 'button'; btn.className = 'sb-tbtn'; btn.setAttribute('aria-expanded', 'false');
-        btn.innerHTML = 'Tools <span aria-hidden="true">▾</span>';
-        t.appendChild(btn);
+        t.classList.add('sb-tname'); t.setAttribute('role', 'button'); t.setAttribute('tabindex', '0'); t.setAttribute('aria-expanded', 'false');
         var row = document.createElement('tr'); row.className = 'sb-tools-row'; row.hidden = true;
         row.innerHTML = '<td></td><td colspan="' + (cols - 1) + '"><ul class="sb-tlist">' + list.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></td>';
         tr.parentNode.insertBefore(row, tr.nextSibling);
-        btn.addEventListener('click', function () {
-          var open = row.hidden; row.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); btn.classList.toggle('open', open);
-        });
+        function tog() { var open = row.hidden; row.hidden = !open; t.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+        t.addEventListener('click', tog);
+        t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
       });
       var h = decodeURIComponent(location.hash.slice(1)), row = h && document.getElementById(h);
       if (row && row.tagName === 'TR') {
-        row.classList.add('sb-target');
-        var b2 = row.querySelector('.sb-tbtn'); if (b2 && b2.getAttribute('aria-expanded') === 'false') b2.click();
+        var b2 = row.querySelector('.sb-tname'); if (b2 && b2.getAttribute('aria-expanded') === 'false') b2.click();
         setTimeout(function () { row.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 150);
-        setTimeout(function () { row.classList.remove('sb-target'); }, 4000);
       }
     });
   }
 
-  function run() { addCSS(); doHero(); doTimeline(); doCases(); doProjects(); doArchive(); }
+  function doFooter() {
+    var adr = document.querySelector('footer [class*="StyledAddress"]');
+    if (!adr || adr.parentNode.querySelector('.sb-credit')) return;
+    var c = document.createElement('div'); c.className = 'sb-credit';
+    c.innerHTML = '<a href="https://github.com/bchiang7" target="_blank" rel="noopener noreferrer">design by ♥️ bchiang7</a>';
+    adr.parentNode.insertBefore(c, adr.nextSibling);
+  }
+
+  function run() { addCSS(); doFooter(); doHero(); doTimeline(); doCases(); doProjects(); doArchive(); }
   var pend = 0;
   function sched() { if (pend) return; pend = setTimeout(function () { pend = 0; run(); }, 30); }
 
