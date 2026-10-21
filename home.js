@@ -107,7 +107,7 @@
   '.sb-route .rtr-plane{stroke-dasharray:5 5}.sb-route .rtr-bus,.sb-route .rtr-car,.sb-route .rtr-train{stroke-dasharray:.1 4.5;stroke-width:2.6}.sb-route .rtr-boat{stroke-dasharray:9 4}' +
   '.sb-route .rdot{fill:#FF3861;stroke:#FAF9F6;stroke-width:1.5}' +
   '.sb-route .rlab{font-family:var(--font-mono);font-size:19px;fill:#2E2E2E;paint-order:stroke;stroke:#FAF9F6;stroke-width:4px;stroke-linejoin:round;opacity:0;transition:opacity .45s}.sb-route .rlab.on{opacity:1}' +
-  '.sb-more{display:inline-block;margin-top:10px;font-family:var(--font-mono);font-size:var(--fz-xs);color:var(--green);text-decoration:none;text-underline-offset:4px}.sb-more:hover,.sb-more:focus-visible{text-decoration:underline;outline:none}' +
+  '.sb-more{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-family:var(--font-mono);font-size:var(--fz-xxs);letter-spacing:.04em;color:var(--light-slate);opacity:.7;text-decoration:none;transition:color .2s,opacity .2s}.sb-more i{font-style:normal;transition:transform .2s}.sb-more:hover,.sb-more:focus-visible{color:var(--green);opacity:1;outline:none}.sb-more:hover i,.sb-more:focus-visible i{transform:translateX(3px)}' +
   '.sb-credit{margin-top:8px;text-align:center;font-family:var(--font-mono);font-size:var(--fz-xxs);line-height:1}.sb-credit a{color:var(--light-slate);text-decoration:none}.sb-credit a:hover{color:var(--green)}' +
   '.sb-tbtn{display:inline-flex;align-items:center;gap:5px;margin-left:12px;padding:3px 8px;border:1px solid rgba(255,56,97,.45);border-radius:4px;background:none;color:var(--green);font-family:var(--font-mono);font-size:var(--fz-xxs);cursor:pointer;vertical-align:middle;transition:background .2s}' +
   '.sb-tbtn:hover,.sb-tbtn:focus-visible{background:rgba(255,56,97,.08);outline:none}.sb-tbtn span{display:inline-block;transition:transform .25s}.sb-tbtn.open span{transform:rotate(180deg)}' +
@@ -454,7 +454,7 @@
     ol.className = 'sb-tl';
     ol.innerHTML = '<span class="sb-prog" aria-hidden="true"></span><ol class="sb-list">' + STEPS.map(function (s) {
       return '<li class="sb-it"><span class="sb-dot" aria-hidden="true"></span><div class="sb-txt"><span class="sb-date">' + s.d + '</span>' +
-        '<h3 class="sb-t">' + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + (s.more ? '<a class="sb-more" href="' + s.more + '">meer details</a>' : '') + '</div>' +
+        '<h3 class="sb-t">' + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + (s.more ? '<a class="sb-more" href="' + s.more + '">meer details <i aria-hidden="true">→</i></a>' : '') + '</div>' +
         (s.img ? '<div class="sb-art sb-draw" data-img="' + s.img + '"><canvas width="900" height="' + s.h + '" aria-hidden="true"></canvas>' + (s.route ? '<svg class="sb-route" viewBox="0 0 900 ' + s.h + '" aria-hidden="true"></svg>' : '') + '</div>'
                : '<div class="sb-art">' + ART[s.a] + '</div>') + '</li>';
     }).join('') + '</ol>';
