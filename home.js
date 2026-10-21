@@ -12,7 +12,9 @@
   '.sbh .sbh-hi{margin:0 0 30px 4px;color:var(--green);font-family:var(--font-mono);font-size:clamp(var(--fz-sm),5vw,var(--fz-md));font-weight:400}' +
   '@media (max-width:480px){.sbh .sbh-hi{margin:0 0 20px 2px}}' +
   '.sbh h2.big-heading{margin:0}' +
-  '.sbh h3.big-heading{margin-top:5px;color:#5C5C5C;line-height:1.1}' +
+  '.sbh h3.big-heading{margin-top:5px;color:#444;line-height:1.1}' +
+  '.sbh .sbh-sub{margin:20px 0 0;max-width:540px}' +
+  'main section:first-of-type a.main-button-link{box-shadow:4px 4px 0 0 var(--green);transform:translate(-5px,-5px)}' +
   '.sbh .sbh-in{opacity:0;transform:translateY(20px);animation:sbhUp .5s var(--easing) forwards}' +
   '.sbh{margin-bottom:10px}' +
   '.sbh .d1{animation-delay:.1s}.sbh .d2{animation-delay:.2s}.sbh .d3{animation-delay:.3s}' +
@@ -21,6 +23,7 @@
   '.sbh-w{grid-area:1/1;white-space:nowrap;padding:0 .04em .08em 0;opacity:0;filter:blur(8px);transform:translateY(.12em);transition:opacity 1.1s ease,filter 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1);' +
   'background:linear-gradient(90deg,#E7255A 0%,#FF5E9A 18%,#E7255A 34%,#C04BFF 50%,#E7255A 66%,#FF7A3D 82%,#E7255A 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:sbhWave 5s linear infinite}' +
   '.sbh-w.on{opacity:1;filter:blur(0);transform:none}' +
+  '.sbh-w.off{opacity:0;filter:blur(8px);transform:translateY(-.12em)}' +
   '.sbh-w.dusting{opacity:1;filter:none;transform:none;transition:none;-webkit-mask-image:linear-gradient(90deg,transparent calc(var(--p) - 2%),#000 calc(var(--p) + 14%));mask-image:linear-gradient(90deg,transparent calc(var(--p) - 2%),#000 calc(var(--p) + 14%))}' +
   '.sbh-rot{position:relative}.sbh-dust{position:absolute;pointer-events:none;z-index:2}' +
   '@keyframes sbhWave{0%{background-position:0% 0}100%{background-position:200% 0}}' +
@@ -196,7 +199,8 @@
       '<h2 class="big-heading sbh-in d1">Sten Bossong</h2>' +
       '<h3 class="big-heading sbh-in d2">Tijd voor <span class="sbh-rot" aria-live="polite">' +
       WORDS.map(function (w, i) { return '<span class="sbh-w"' + (i ? ' aria-hidden="true"' : '') + '>' + w + '</span>'; }).join('') +
-      '</span></h3>';
+      '</span></h3>' +
+      '<p class="sbh-sub sbh-in d3">Voor media, marketing &amp; meer.</p>';
     sec.insertBefore(box, anchor);
     var rot = box.querySelector('.sbh-rot'), ws = rot.querySelectorAll('.sbh-w');
     setTimeout(function () { ws[0].classList.add('on'); }, reduce ? 0 : 450);
@@ -208,7 +212,7 @@
         var nxt = (cur + 1) % ws.length, a = ws[cur], b = ws[nxt];
         a.setAttribute('aria-hidden', 'true'); b.removeAttribute('aria-hidden');
         if (reduce) { a.classList.remove('on'); b.classList.add('on'); }
-        else { dust(a, rot); setTimeout(function () { b.classList.add('on'); }, 750); }
+        else { a.classList.remove('on'); a.classList.add('off'); setTimeout(function () { a.classList.remove('off'); b.classList.add('on'); }, 650); }
         cur = nxt; step();
       }, HOLD[cur] + (reduce ? 0 : 1100));
     }
