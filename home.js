@@ -316,7 +316,7 @@
     { d: '1992', t: 'Geboren in Aalsmeer', a: 'birth' },
     { d: '2009', t: 'Afgestudeerd Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
     { d: '2012', t: 'Afgestudeerd Bsc. Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
-    { d: '2014–15', t: 'Reis rond de wereld van 14 maanden', a: 'world', img: 'world', h: 662, route: true },
+    { d: '2014–15', t: 'Reis rond de wereld van 14 maanden', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
     { d: '2018 · jan.', t: 'Kick-start carrière <a href="https://imlounge.nl" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
     { d: '2020 · apr.', t: 'Transfer <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', s: 'Global performance marketeer', a: 'globe' },
     { d: '2021 · mei', t: 'Chief marketing officer <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">@ BikeFair</a>', s: '&amp; oprichting Flii Media', a: 'bike', img: 'bike', h: 678 },
