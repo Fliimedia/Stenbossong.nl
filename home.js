@@ -132,7 +132,7 @@
   '.sb-list{display:flex;flex-wrap:nowrap;will-change:transform;position:relative;transition:transform .6s cubic-bezier(.4,0,.2,1)}' +
   '.sb-it{flex:0 0 300px;width:300px;min-height:0;padding:0 24px 0 0;display:block;opacity:.35;transition:opacity .4s}.sb-it.cur{opacity:1}.sb-it:last-child{padding:0 24px 0 0;min-height:0}' +
   '.sb-it .sb-dot{left:0;top:0}.sb-it .sb-txt{opacity:1;transform:none;padding-top:30px}' +
-  '@media (max-width:768px){.sb-pin{gap:18px;padding-top:64px}.sb-it{flex-basis:78vw;width:78vw}}';
+  '@media (max-width:768px){.sb-pin{gap:18px;padding-top:64px}.sb-list{width:100%}.sb-it{flex:0 0 100%;width:100%;padding-right:0}.sb-it:last-child{padding-right:0}}';
 
   function addCSS() {
     if (document.getElementById('sb-home-css')) return;
