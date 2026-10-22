@@ -1,5 +1,5 @@
 (function () {
-  var LABEL = 'Concepten';
+  var LABEL = 'Formats';
   var HREF = '/formats/';
   function addDesktop() {
     var cv = document.querySelector('header a.resume-button');
