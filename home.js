@@ -121,15 +121,18 @@
   '@media (prefers-reduced-motion:reduce){.sb-txt,.sb-art{opacity:1!important;transform:none!important;transition:none!important}' +
   '.sk *{animation:none!important;stroke-dashoffset:0!important;opacity:1!important;transform:none!important}' +
   '.sbh .sbh-in{animation:none;opacity:1;transform:none}}' +
-  /* sticky tijdlijn: tekening op vaste plek */
-  '.sb-tl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0 48px;align-items:start;max-width:none;padding:0}.sb-tl:before{display:none}' +
-  '.sb-lw{position:relative;padding:0 0 0 46px;grid-column:1;grid-row:1}.sb-lw:before,.sb-lw .sb-prog{content:"";position:absolute;left:11px;top:6px;width:2px;border-radius:2px}.sb-lw:before{bottom:6px;background:rgba(46,46,46,.12)}.sb-lw .sb-prog{height:0;background:var(--green);transition:height .2s linear}' +
-  '.sb-it{min-height:48vh;padding:0}.sb-it:last-child{min-height:56vh;padding:0}' +
-  '.sb-stage{grid-column:2;grid-row:1;position:sticky;top:calc(50vh - 190px);display:grid}' +
+  /* horizontale tijdlijn: vastgezet tijdens scrollen, tekening op vaste plek */
+  '.sb-tl{position:relative;max-width:none;padding:0;margin:10px 0 0}.sb-tl:before{display:none}' +
+  '.sb-pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:28px;overflow:hidden;padding-top:70px;box-sizing:border-box}' +
+  '.sb-stage{display:grid;width:100%;max-width:620px;margin:0 auto}' +
   '.sb-st{grid-area:1/1;opacity:0;transition:opacity .55s ease;pointer-events:none}.sb-st.on{opacity:1;pointer-events:auto}' +
   '.sb-st .sb-draw{width:100%!important;max-width:none}' +
-  '@media (max-width:768px){.sb-tl{grid-template-columns:minmax(0,1fr)}.sb-stage{grid-column:1;grid-row:1;top:60px;z-index:3;padding:10px 0;background:var(--navy);box-shadow:0 14px 14px -10px var(--navy)}' +
-  '.sb-lw{grid-column:1;grid-row:2;padding-left:40px;margin-top:8px}.sb-lw:before,.sb-lw .sb-prog{left:8px}.sb-it{min-height:34vh}.sb-it:last-child{min-height:46vh}}';
+  '.sb-trk{position:relative;width:100%}' +
+  '.sb-trk:before,.sb-trk .sb-prog{content:"";position:absolute;left:0;top:7px;height:2px;border-radius:2px}.sb-trk:before{right:0;background:rgba(46,46,46,.12)}.sb-trk .sb-prog{width:0;background:var(--green);z-index:1}' +
+  '.sb-list{display:flex;flex-wrap:nowrap;will-change:transform;position:relative;transition:transform .6s cubic-bezier(.4,0,.2,1)}' +
+  '.sb-it{flex:0 0 300px;width:300px;min-height:0;padding:0 24px 0 0;display:block;opacity:.35;transition:opacity .4s}.sb-it.cur{opacity:1}.sb-it:last-child{padding:0 24px 0 0;min-height:0}' +
+  '.sb-it .sb-dot{left:0;top:0}.sb-it .sb-txt{opacity:1;transform:none;padding-top:30px}' +
+  '@media (max-width:768px){.sb-pin{gap:18px;padding-top:64px}.sb-it{flex-basis:78vw;width:78vw}}';
 
   function addCSS() {
     if (document.getElementById('sb-home-css')) return;
@@ -460,12 +463,13 @@
     var h = sec.querySelector('h2');
     var ol = document.createElement('div');
     ol.className = 'sb-tl';
-    ol.innerHTML = '<div class="sb-stage" aria-hidden="true">' + STEPS.map(function (s, i) {
+    ol.innerHTML = '<div class="sb-pin"><div class="sb-stage" aria-hidden="true">' + STEPS.map(function (s, i) {
       return '<div class="sb-st" data-i="' + i + '">' + (s.img ? '<div class="sb-draw" data-img="' + s.img + '"><canvas width="900" height="' + s.h + '"></canvas>' + (s.route ? '<svg class="sb-route" viewBox="0 0 900 ' + s.h + '"></svg>' : '') + '</div>' : '') + '</div>';
-    }).join('') + '</div><div class="sb-lw"><span class="sb-prog" aria-hidden="true"></span><ol class="sb-list">' + STEPS.map(function (s) {
+    }).join('') + '</div><div class="sb-trk"><span class="sb-prog" aria-hidden="true"></span><ol class="sb-list">' + STEPS.map(function (s) {
       return '<li class="sb-it"><span class="sb-dot" aria-hidden="true"></span><div class="sb-txt"><span class="sb-date">' + s.d + '</span>' +
         '<h3 class="sb-t">' + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + (s.more ? '<a class="sb-more" href="' + s.more + '">meer details <i aria-hidden="true">→</i></a>' : '') + '</div></li>';
-    }).join('') + '</ol></div>';
+    }).join('') + '</ol></div></div>';
+    ol.style.height = (STEPS.length * 60 + 100) + 'vh';
     if (h && h.nextSibling) sec.insertBefore(ol, h.nextSibling); else sec.appendChild(ol);
     progress(); setTimeout(activate, 50);
   }
@@ -473,25 +477,21 @@
   var cur = -1;
   function activate() {
     var tl = document.querySelector('.sb-tl'); if (!tl) return;
-    var items = tl.querySelectorAll('.sb-it'), st = tl.querySelectorAll('.sb-st'), stage = tl.querySelector('.sb-stage');
-    var r = tl.getBoundingClientRect(), vh = window.innerHeight;
-    if (r.top > vh * 0.85 || r.bottom < 0) return;
-    var sr = stage.getBoundingClientRect(), mob = window.innerWidth <= 768;
-    var line = mob ? sr.bottom + (vh - sr.bottom) * 0.5 : vh * 0.62, n = 0;
-    items.forEach(function (li, i) { if (li.getBoundingClientRect().top <= line) n = i; });
+    var items = tl.querySelectorAll('.sb-it'), st = tl.querySelectorAll('.sb-st'), list = tl.querySelector('.sb-list'), trk = tl.querySelector('.sb-trk');
+    var r = tl.getBoundingClientRect(), vh = window.innerHeight, N = items.length;
+    var p = Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - vh))), f = p * (N - 1);
+    var w = items[0].offsetWidth, tw = trk.offsetWidth, x = -(Math.round(f) * w);
+    list.style.transform = 'translateX(' + x.toFixed(1) + 'px)';
+    trk.querySelector('.sb-prog').style.width = (p * 100).toFixed(2) + '%';
+    if (r.top > vh * 0.6 || r.bottom < vh * 0.3) return;
+    var n = Math.round(f);
     for (var i = 0; i <= n; i++) reveal(items[i]);
     if (n === cur) return; cur = n;
+    items.forEach(function (li, i) { li.classList.toggle('cur', i === n); });
     st.forEach(function (el, i) { el.classList.toggle('on', i === n); });
     var dr = st[n].querySelector('.sb-draw'); if (dr) drawIn(dr);
   }
-
-  function progress() {
-    var ol = document.querySelector('.sb-lw'); if (!ol) return;
-    var bar = ol.querySelector('.sb-prog'), r = ol.getBoundingClientRect();
-    var mid = window.innerHeight * 0.72;
-    var h = Math.max(0, Math.min(r.height - 12, mid - r.top));
-    bar.style.height = h + 'px';
-  }
+  function progress() {}
 
   var raf = 0;
   function onScroll() { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; progress(); activate(); }); }
