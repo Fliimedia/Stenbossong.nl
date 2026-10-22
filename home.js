@@ -43,7 +43,7 @@
   '.sb-txt{opacity:0;transform:translateY(18px);transition:opacity .6s var(--easing),transform .6s var(--easing)}' +
   '.sb-it.in .sb-txt{opacity:1;transform:none}' +
   '.sb-date{display:block;margin:0 0 8px;font-family:var(--font-mono);font-size:var(--fz-xs);color:var(--green);letter-spacing:.04em}' +
-  '.sb-t{margin:0;font-size:var(--fz-xxl);font-weight:500;line-height:1.3;color:var(--slate)}' +
+  '.sb-t{margin:0;font-size:var(--fz-xxl);font-weight:500;line-height:1.3;color:var(--slate)}.sb-ico{width:.9em;height:.9em;margin:0 .38em 0 0;vertical-align:-.08em;fill:none;stroke:var(--green);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}' +
   '.sb-t .at{color:var(--green)}.sb-t a{color:var(--green);text-decoration:none}' +
   '.sb-t a:hover{text-decoration:underline;text-underline-offset:3px}' +
   '.sb-sub{margin:6px 0 0;font-family:var(--font-mono);font-size:var(--fz-sm);color:var(--light-slate)}' +
@@ -333,7 +333,7 @@
     { d: '1992', t: 'Geboren <span class="at">@ Aalsmeer</span>', a: 'birth', img: 'aalsmeer', h: 678 },
     { d: 't/m 2009', t: 'Opgegroeid <span class="at">@ Amstelveen</span>', a: 'birth', img: 'noorddammer', h: 678 },
     { d: '2009', t: 'Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
-    { d: '2012', t: 'Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
+    { d: '2012', t: 'Bsc. Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
     { d: '2014–15', t: 'Reis <span class="at">@ Wereld</span>', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
     { d: '2018 · jan.', t: 'Kick-start <a href="https://www.dutchitleaders.nl/news/173633/ace-breidt-verder-uit-met-media-performance-agency-im-lounge" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
     { d: '2020 · apr.', t: 'Global performance <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', a: 'globe', img: 'beyonddutch', h: 678 },
@@ -341,6 +341,7 @@
     { d: '2026 · apr.', t: 'Celebrating 5 years <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">@ Flii</a>', s: '<span class="cnt" data-n="40">40</span>+ clients, <span class="cnt" data-n="84">84</span> projects', a: 'party', img: 'flii', h: 678 }
   ];
 
+  var ICO = {aalsmeer: '<path d="M9 12h.01"/><path d="M15 12h.01"/><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/>',noorddammer: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',kkc: '<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',vu: '<path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',world: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',iml: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',beyonddutch: '<path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>',bike: '<circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>',flii: '<path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17"/><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"/><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/>'};
   var io = null;
   function count(el) {
     var n = +el.getAttribute('data-n'), t0 = null;
@@ -433,25 +434,54 @@
 
   /* realistische tekening die zichzelf intekent: elke inktpixel heeft een moment (order-map) */
   function img(src) { return new Promise(function (ok, no) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = no; i.src = src; }); }
-  function drawIn(box) {
-    if (box.getAttribute('data-go')) return; box.setAttribute('data-go', '1');
-    var k = box.getAttribute('data-img'), cv = box.querySelector('canvas'), cx = cv.getContext('2d'), W = cv.width, H = cv.height;
-    var base = '/assets/tijdlijn/' + k;
-    Promise.all([img(base + '.webp?v=2'), img(base + '-order.png?v=2')]).then(function (a) {
+  var DATA = {};
+  function prep(box) {
+    var k = box.getAttribute('data-img');
+    if (DATA[k]) return DATA[k];
+    var cv = box.querySelector('canvas'), W = cv.width, H = cv.height, base = '/assets/tijdlijn/' + k;
+    DATA[k] = Promise.all([img(base + '.webp?v=2'), img(base + '-order.png?v=2')]).then(function (a) {
       var t = document.createElement('canvas'); t.width = W; t.height = H; var tc = t.getContext('2d');
       tc.drawImage(a[0], 0, 0, W, H); var src = tc.getImageData(0, 0, W, H).data;
       tc.clearRect(0, 0, W, H); tc.drawImage(a[1], 0, 0, W, H); var od = tc.getImageData(0, 0, W, H).data;
-      var buckets = []; for (var b = 0; b < 256; b++) buckets.push([]);
-      for (var p = 0; p < W * H; p++) { var v = od[p * 4]; if (v > 0) buckets[v].push(p); }
-      var out = cx.createImageData(W, H), d = out.data;
-      for (var q = 0; q < W * H; q++) { d[q * 4] = 250; d[q * 4 + 1] = 249; d[q * 4 + 2] = 246; d[q * 4 + 3] = 255; }
-      function paint(f, to) { for (var b = f; b <= to; b++) { var L = buckets[b]; for (var i = 0; i < L.length; i++) { var x = L[i] * 4; d[x] = src[x]; d[x + 1] = src[x + 1]; d[x + 2] = src[x + 2]; } } }
-      if (reduce) { paint(1, 255); cx.putImageData(out, 0, 0); drawn(box); return; }
-      var t0 = null, done = 0, DUR = 6000;
+      var n = 0, p; for (p = 0; p < W * H; p++) if (od[p * 4] > 0) n++;
+      var idx = new Uint32Array(n), ord = new Float32Array(n), win = new Float32Array(n), col = new Uint8Array(n * 3), j = 0;
+      for (p = 0; p < W * H; p++) {
+        var v = od[p * 4]; if (!v) continue;
+        var x = p * 4, r = src[x], g = src[x + 1], b = src[x + 2];
+        var pink = r > 170 && r - g > 60 && b > 60;
+        idx[j] = x; col[j * 3] = r; col[j * 3 + 1] = g; col[j * 3 + 2] = b;
+        if (pink) { ord[j] = 215 + ((p % W) / W) * 55 + (v - 220) * .5; win[j] = 70; }
+        else { ord[j] = v * .85; win[j] = 34; }
+        j++;
+      }
+      return { W: W, H: H, n: n, idx: idx, ord: ord, win: win, col: col, end: 340 };
+    });
+    return DATA[k];
+  }
+  function drawIn(box) {
+    var cv = box.querySelector('canvas'), cx = cv.getContext('2d'), route = box.querySelector('.sb-route');
+    var run = (box._run || 0) + 1; box._run = run;
+    if (route) route.style.opacity = 0;
+    prep(box).then(function (D) {
+      if (box._run !== run) return;
+      var out = cx.createImageData(D.W, D.H), d = out.data, i;
+      for (i = 0; i < d.length; i += 4) { d[i] = 250; d[i + 1] = 249; d[i + 2] = 246; d[i + 3] = 255; }
+      function frame(T) {
+        for (var q = 0; q < D.n; q++) {
+          var a = (T - D.ord[q]) / D.win[q]; if (a <= 0) continue; if (a > 1) a = 1;
+          var x = D.idx[q], c = q * 3;
+          d[x] = 250 + (D.col[c] - 250) * a; d[x + 1] = 249 + (D.col[c + 1] - 249) * a; d[x + 2] = 246 + (D.col[c + 2] - 246) * a;
+        }
+        cx.putImageData(out, 0, 0);
+      }
+      function done() { if (route) { route.style.transition = 'opacity .9s'; route.style.opacity = 1; } drawn(box); }
+      if (reduce) { frame(9999); done(); return; }
+      var t0 = null, DUR = 7000;
       function f(ts) {
-        if (!t0) t0 = ts; var k2 = Math.min(1, (ts - t0) / DUR), e = k2 < .5 ? 2 * k2 * k2 : 1 - Math.pow(-2 * k2 + 2, 2) / 2, lim = Math.floor(1 + e * 254);
-        if (lim > done) { paint(done + 1, lim); done = lim; cx.putImageData(out, 0, 0); }
-        if (k2 < 1) requestAnimationFrame(f); else drawn(box);
+        if (box._run !== run) return;
+        if (!t0) t0 = ts; var k2 = Math.min(1, (ts - t0) / DUR), e = .5 - .5 * Math.cos(Math.PI * k2);
+        frame(e * D.end);
+        if (k2 < 1) requestAnimationFrame(f); else done();
       }
       requestAnimationFrame(f);
     }).catch(function () { box.style.display = 'none'; });
@@ -467,7 +497,7 @@
       return '<div class="sb-st" data-i="' + i + '">' + (s.img ? '<div class="sb-draw" data-img="' + s.img + '"><canvas width="900" height="' + s.h + '"></canvas>' + (s.route ? '<svg class="sb-route" viewBox="0 0 900 ' + s.h + '"></svg>' : '') + '</div>' : '') + '</div>';
     }).join('') + '</div><div class="sb-trk"><span class="sb-prog" aria-hidden="true"></span><ol class="sb-list">' + STEPS.map(function (s) {
       return '<li class="sb-it"><span class="sb-dot" aria-hidden="true"></span><div class="sb-txt"><span class="sb-date">' + s.d + '</span>' +
-        '<h3 class="sb-t">' + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + (s.more ? '<a class="sb-more" href="' + s.more + '">meer details <i aria-hidden="true">→</i></a>' : '') + '</div></li>';
+        '<h3 class="sb-t">' + (ICO[s.img] ? '<svg class="sb-ico" viewBox="0 0 24 24" aria-hidden="true">' + ICO[s.img] + '</svg>' : '') + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + (s.more ? '<a class="sb-more" href="' + s.more + '">lezen <i aria-hidden="true">→</i></a>' : '') + '</div></li>';
     }).join('') + '</ol></div></div>';
     ol.style.height = (STEPS.length * 60 + 100) + 'vh';
     if (h && h.nextSibling) sec.insertBefore(ol, h.nextSibling); else sec.appendChild(ol);
@@ -598,7 +628,15 @@
     txt.insertBefore(d, orig);
   }
 
-  function run() { addCSS(); doFooter(); doAbout(); doHero(); doTimeline(); doCases(); doProjects(); doArchive(); }
+  function doNav() {
+    var els = [].slice.call(document.querySelectorAll('a[href="/#jobs"], #jobs > h2'));
+    els.forEach(function (el) {
+      if (!Object.keys(el).some(function (k) { return k.indexOf('__reactFiber') === 0; })) return;
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), t;
+      while ((t = w.nextNode())) if (t.nodeValue.indexOf('Ervaring') > -1) t.nodeValue = t.nodeValue.replace('Ervaring', 'Timeline');
+    });
+  }
+  function run() { addCSS(); doNav(); doFooter(); doAbout(); doHero(); doTimeline(); doCases(); doProjects(); doArchive(); }
   var pend = 0;
   function sched() { if (pend) return; pend = setTimeout(function () { pend = 0; run(); }, 30); }
 
