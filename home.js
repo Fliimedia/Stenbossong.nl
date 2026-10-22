@@ -120,7 +120,16 @@
   '.sb-it{grid-template-columns:1fr;gap:16px;padding-bottom:52px}.sb-art{width:min(230px,80%)}.sb-t{font-size:var(--fz-xl)}}' +
   '@media (prefers-reduced-motion:reduce){.sb-txt,.sb-art{opacity:1!important;transform:none!important;transition:none!important}' +
   '.sk *{animation:none!important;stroke-dashoffset:0!important;opacity:1!important;transform:none!important}' +
-  '.sbh .sbh-in{animation:none;opacity:1;transform:none}}';
+  '.sbh .sbh-in{animation:none;opacity:1;transform:none}}' +
+  /* sticky tijdlijn: tekening op vaste plek */
+  '.sb-tl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0 48px;align-items:start;max-width:none;padding:0}.sb-tl:before{display:none}' +
+  '.sb-lw{position:relative;padding:0 0 0 46px;grid-column:1;grid-row:1}.sb-lw:before,.sb-lw .sb-prog{content:"";position:absolute;left:11px;top:6px;width:2px;border-radius:2px}.sb-lw:before{bottom:6px;background:rgba(46,46,46,.12)}.sb-lw .sb-prog{height:0;background:var(--green);transition:height .2s linear}' +
+  '.sb-it{min-height:48vh;padding:0}.sb-it:last-child{min-height:56vh;padding:0}' +
+  '.sb-stage{grid-column:2;grid-row:1;position:sticky;top:calc(50vh - 190px);display:grid}' +
+  '.sb-st{grid-area:1/1;opacity:0;transition:opacity .55s ease;pointer-events:none}.sb-st.on{opacity:1;pointer-events:auto}' +
+  '.sb-st .sb-draw{width:100%!important;max-width:none}' +
+  '@media (max-width:768px){.sb-tl{grid-template-columns:minmax(0,1fr)}.sb-stage{grid-column:1;grid-row:1;top:60px;z-index:3;padding:10px 0;background:var(--navy);box-shadow:0 14px 14px -10px var(--navy)}' +
+  '.sb-lw{grid-column:1;grid-row:2;padding-left:40px;margin-top:8px}.sb-lw:before,.sb-lw .sb-prog{left:8px}.sb-it{min-height:34vh}.sb-it:last-child{min-height:46vh}}';
 
   function addCSS() {
     if (document.getElementById('sb-home-css')) return;
@@ -342,7 +351,6 @@
     var am = li.querySelector('.am');
     if (am && am.beginElement) { try { am.beginElement(); } catch (e) {} }
     li.querySelectorAll('.cnt').forEach(count);
-    var dr = li.querySelector('.sb-draw'); if (dr) drawIn(dr);
   }
 
 
@@ -452,26 +460,33 @@
     var h = sec.querySelector('h2');
     var ol = document.createElement('div');
     ol.className = 'sb-tl';
-    ol.innerHTML = '<span class="sb-prog" aria-hidden="true"></span><ol class="sb-list">' + STEPS.map(function (s) {
+    ol.innerHTML = '<div class="sb-stage" aria-hidden="true">' + STEPS.map(function (s, i) {
+      return '<div class="sb-st" data-i="' + i + '">' + (s.img ? '<div class="sb-draw" data-img="' + s.img + '"><canvas width="900" height="' + s.h + '"></canvas>' + (s.route ? '<svg class="sb-route" viewBox="0 0 900 ' + s.h + '"></svg>' : '') + '</div>' : '') + '</div>';
+    }).join('') + '</div><div class="sb-lw"><span class="sb-prog" aria-hidden="true"></span><ol class="sb-list">' + STEPS.map(function (s) {
       return '<li class="sb-it"><span class="sb-dot" aria-hidden="true"></span><div class="sb-txt"><span class="sb-date">' + s.d + '</span>' +
-        '<h3 class="sb-t">' + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + (s.more ? '<a class="sb-more" href="' + s.more + '">meer details <i aria-hidden="true">→</i></a>' : '') + '</div>' +
-        (s.img ? '<div class="sb-art sb-draw" data-img="' + s.img + '"><canvas width="900" height="' + s.h + '" aria-hidden="true"></canvas>' + (s.route ? '<svg class="sb-route" viewBox="0 0 900 ' + s.h + '" aria-hidden="true"></svg>' : '') + '</div>'
-               : '<div class="sb-art">' + ART[s.a] + '</div>') + '</li>';
-    }).join('') + '</ol>';
+        '<h3 class="sb-t">' + s.t + '</h3>' + (s.s ? '<p class="sb-sub">' + s.s + '</p>' : '') + (s.more ? '<a class="sb-more" href="' + s.more + '">meer details <i aria-hidden="true">→</i></a>' : '') + '</div></li>';
+    }).join('') + '</ol></div>';
     if (h && h.nextSibling) sec.insertBefore(ol, h.nextSibling); else sec.appendChild(ol);
-    var items = ol.querySelectorAll('.sb-it');
-    if (reduce || !('IntersectionObserver' in window)) { items.forEach(reveal); }
-    else {
-      io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
-      }, { rootMargin: '0px 0px -22% 0px', threshold: 0.15 });
-      items.forEach(function (li) { io.observe(li); });
-    }
-    progress();
+    progress(); setTimeout(activate, 50);
+  }
+
+  var cur = -1;
+  function activate() {
+    var tl = document.querySelector('.sb-tl'); if (!tl) return;
+    var items = tl.querySelectorAll('.sb-it'), st = tl.querySelectorAll('.sb-st'), stage = tl.querySelector('.sb-stage');
+    var r = tl.getBoundingClientRect(), vh = window.innerHeight;
+    if (r.top > vh * 0.85 || r.bottom < 0) return;
+    var sr = stage.getBoundingClientRect(), mob = window.innerWidth <= 768;
+    var line = mob ? sr.bottom + (vh - sr.bottom) * 0.5 : vh * 0.62, n = 0;
+    items.forEach(function (li, i) { if (li.getBoundingClientRect().top <= line) n = i; });
+    for (var i = 0; i <= n; i++) reveal(items[i]);
+    if (n === cur) return; cur = n;
+    st.forEach(function (el, i) { el.classList.toggle('on', i === n); });
+    var dr = st[n].querySelector('.sb-draw'); if (dr) drawIn(dr);
   }
 
   function progress() {
-    var ol = document.querySelector('.sb-tl'); if (!ol) return;
+    var ol = document.querySelector('.sb-lw'); if (!ol) return;
     var bar = ol.querySelector('.sb-prog'), r = ol.getBoundingClientRect();
     var mid = window.innerHeight * 0.72;
     var h = Math.max(0, Math.min(r.height - 12, mid - r.top));
@@ -479,7 +494,7 @@
   }
 
   var raf = 0;
-  function onScroll() { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; progress(); }); }
+  function onScroll() { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; progress(); activate(); }); }
 
 
   /* ---------- cases + projecten ---------- */
