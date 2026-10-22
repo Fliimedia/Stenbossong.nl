@@ -123,8 +123,9 @@
   '.sbh .sbh-in{animation:none;opacity:1;transform:none}}' +
   /* horizontale tijdlijn: vastgezet tijdens scrollen, tekening op vaste plek */
   '.sb-tl{position:relative;max-width:none;padding:0;margin:10px 0 0}.sb-tl:before{display:none}' +
-  '.sb-pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:28px;overflow:hidden;padding-top:70px;box-sizing:border-box}' +
+  '.sb-pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-start;gap:28px;overflow:hidden;padding-top:84px;box-sizing:border-box}.sb-tl{margin-top:-64px!important}' +
   '.sb-stage{display:grid;width:100%;max-width:620px;margin:0 auto}' +
+  'a.archive-link.sb-all{margin-top:30px}' +
   '.sb-st{grid-area:1/1;opacity:0;transition:opacity .55s ease;pointer-events:none}.sb-st.on{opacity:1;pointer-events:auto}' +
   '.sb-st .sb-draw{width:100%!important;max-width:none}' +
   '.sb-trk{position:relative;width:100%}' +
@@ -132,7 +133,7 @@
   '.sb-list{display:flex;flex-wrap:nowrap;will-change:transform;position:relative;transition:transform .6s cubic-bezier(.4,0,.2,1)}' +
   '.sb-it{flex:0 0 300px;width:300px;min-height:0;padding:0 24px 0 0;display:block;opacity:.35;transition:opacity .4s}.sb-it.cur{opacity:1}.sb-it:last-child{padding:0 24px 0 0;min-height:0}' +
   '.sb-it .sb-dot{left:0;top:0}.sb-it .sb-txt{opacity:1;transform:none;padding-top:30px}' +
-  '@media (max-width:768px){.sb-pin{gap:18px;padding-top:64px}.sb-list{width:100%}.sb-it{flex:0 0 100%;width:100%;padding-right:0}.sb-it:last-child{padding-right:0}}';
+  '@media (max-width:768px){.sb-pin{gap:18px;padding-top:76px}.sb-tl{margin-top:-56px!important}.sb-list{width:100%}.sb-it{flex:0 0 100%;width:100%;padding-right:0}.sb-it:last-child{padding-right:0}}';
 
   function addCSS() {
     if (document.getElementById('sb-home-css')) return;
@@ -614,6 +615,8 @@
     sec.insertBefore(ul, grid.nextSibling);
     grid.classList.add('sb-hidegrid');
     var more = sec.querySelector('.more-button'); if (more) more.classList.add('sb-hidegrid');
+    var all = sec.querySelector(':scope > .archive-link');
+    if (all) { var cl = all.cloneNode(true); cl.removeAttribute('style'); cl.removeAttribute('data-sr-id'); cl.classList.add('sb-all'); all.classList.add('sb-hidegrid'); ul.parentNode.insertBefore(cl, ul.nextSibling); }
     getProjects().then(function (list) {
       ul.innerHTML = list.map(function (f, i) {
         return '<li><a class="sb-row" href="/archive/#' + slug(f.title) + '"><span class="sb-r-meta">' + (i < 9 ? '0' : '') + (i + 1) + '</span>' +
