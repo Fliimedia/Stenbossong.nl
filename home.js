@@ -335,7 +335,7 @@
     { d: '2009', t: 'Atheneum <span class="at">@ KKC</span>', a: 'grad1', img: 'kkc', h: 678 },
     { d: '2012', t: 'Bsc. Communicatiewetenschappen <span class="at">@ VU</span>', a: 'grad2', img: 'vu', h: 678 },
     { d: '2014–15', t: 'Reis <span class="at">@ Wereld</span>', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
-    { d: '2018 · jan.', t: 'Kick-start <a href="https://www.dutchitleaders.nl/news/173633/ace-breidt-verder-uit-met-media-performance-agency-im-lounge" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
+    { d: '2018 · jan.', t: 'Kick-start <a href="https://unisco.nl" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
     { d: '2020 · apr.', t: 'Global performance <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', a: 'globe', img: 'beyonddutch', h: 678 },
     { d: '2021 · mei', t: 'Chief marketing officer <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">@ BikeFair</a>', s: '&amp; oprichting Flii Media', a: 'bike', img: 'bike', h: 678 },
     { d: '2026 · apr.', t: 'Celebrating 5 years <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">@ Flii</a>', s: '<span class="cnt" data-n="40">40</span>+ clients, <span class="cnt" data-n="84">84</span> projects', a: 'party', img: 'flii', h: 678 }
@@ -501,9 +501,59 @@
     }).join('') + '</ol></div></div>';
     ol.style.height = (STEPS.length * 60 + 100) + 'vh';
     if (h && h.nextSibling) sec.insertBefore(ol, h.nextSibling); else sec.appendChild(ol);
-    progress(); setTimeout(activate, 50);
+    progress(); setTimeout(activate, 50); stepper(ol);
   }
 
+  /* één gebaar = één stap; verticaal én horizontaal (wiel, trackpad, swipe) */
+  function stepper(tl) {
+    if (tl._step) return; tl._step = 1;
+    var N = STEPS.length, busy = 0, lastWheel = 0, stepped = false, touch = null, last = null;
+    function vh() { return window.innerHeight; }
+    function engaged() { var r = tl.getBoundingClientRect(); return r.top <= 2 && r.bottom >= vh() - 2; }
+    function now() { var r = tl.getBoundingClientRect(), p = Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - vh()))); return Math.round(p * (N - 1)); }
+    function y(n) { return tl.getBoundingClientRect().top + window.scrollY + n * (tl.offsetHeight - vh()) / (N - 1); }
+    function go(n) {
+      busy = Date.now() + 750;
+      window.scrollTo({ top: Math.round(y(n)), behavior: 'smooth' });
+    }
+    window.addEventListener('wheel', function (e) {
+      if (!engaged()) return;
+      var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY; if (!d) return;
+      var t = (last === null ? now() : last) + (d > 0 ? 1 : -1);
+      if (t < 0 || t > N - 1) return;
+      e.preventDefault();
+      var ts = Date.now(), gap = ts - lastWheel; lastWheel = ts;
+      if (gap > 220) stepped = false;
+      if (stepped || ts < busy) return;
+      stepped = true; go(t);
+    }, { passive: false });
+    window.addEventListener('touchstart', function (e) {
+      var p = e.touches[0]; touch = { x: p.clientX, y: p.clientY, mode: null, t: 0 };
+    }, { passive: true });
+    window.addEventListener('touchmove', function (e) {
+      if (!touch) return; var p = e.touches[0], dx = p.clientX - touch.x, dy = p.clientY - touch.y;
+      if (!touch.mode) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        var hor = Math.abs(dx) > Math.abs(dy), dir = (hor ? dx : dy) < 0 ? 1 : -1, t = (last === null ? now() : last) + dir;
+        touch.mode = engaged() && t >= 0 && t <= N - 1 ? 'step' : 'native'; touch.t = t; touch.hor = hor;
+      }
+      if (touch.mode === 'step') { e.preventDefault(); touch.d = touch.hor ? dx : dy; }
+    }, { passive: false });
+    window.addEventListener('touchend', function () {
+      if (touch && touch.mode === 'step' && Math.abs(touch.d || 0) > 30 && Date.now() >= busy) go(touch.t);
+      touch = null;
+    }, { passive: true });
+    // momentum/toetsenbord: nooit verder dan één stap tegelijk
+    window.addEventListener('scroll', function () {
+      var on = engaged();
+      if (!on) { last = null; return; }
+      if (touch || Date.now() < busy) return;
+      var c = now();
+      if (last === null) { var r = tl.getBoundingClientRect(); last = -r.top < (r.height - vh()) / 2 ? 0 : N - 1; }
+      if (c !== last) { last = last + (c > last ? 1 : -1); go(last); }
+    }, { passive: true });
+    var _go = go; go = function (n) { last = n; _go(n); };
+  }
   var cur = -1;
   function activate() {
     var tl = document.querySelector('.sb-tl'); if (!tl) return;
