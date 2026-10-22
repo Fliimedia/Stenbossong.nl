@@ -14,7 +14,7 @@
   '.sbh h2.big-heading{margin:0}' +
   '.sbh h3.big-heading{margin-top:5px;color:#444;line-height:1.1}' +
   '.sbh .sbh-sub{margin:20px 0 0;max-width:540px}' +
-  'main section:first-of-type a.main-button-link{box-shadow:4px 4px 0 0 var(--green);transform:translate(-5px,-5px)}' +
+  'main section:first-of-type a.main-button-link{box-shadow:4px 4px 0 0 var(--green);transform:translate(-5px,-5px);transition:transform .14s ease,box-shadow .14s ease}main section:first-of-type a.main-button-link.sb-press{box-shadow:0 0 0 0 var(--green);transform:none}' +
   '.sbh .sbh-in{opacity:0;transform:translateY(20px);animation:sbhUp .5s var(--easing) forwards}' +
   '.sbh{margin-bottom:10px}' +
   '.sbh .d1{animation-delay:.1s}.sbh .d2{animation-delay:.2s}.sbh .d3{animation-delay:.3s}' +
@@ -636,6 +636,17 @@
       while ((t = w.nextNode())) if (t.nodeValue.indexOf('Ervaring') > -1) t.nodeValue = t.nodeValue.replace('Ervaring', 'Timeline');
     });
   }
+  var pressT = 0;
+  document.addEventListener('pointerdown', function (e) {
+    var a = e.target.closest && e.target.closest('main section:first-of-type a.main-button-link'); if (!a) return;
+    a.classList.add('sb-press'); clearTimeout(pressT);
+  }, true);
+  ['pointerup', 'pointercancel', 'click'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) {
+      var a = document.querySelector('main section:first-of-type a.main-button-link.sb-press'); if (!a) return;
+      clearTimeout(pressT); pressT = setTimeout(function () { a.classList.remove('sb-press'); }, 450);
+    }, true);
+  });
   function run() { addCSS(); doNav(); doFooter(); doAbout(); doHero(); doTimeline(); doCases(); doProjects(); doArchive(); }
   var pend = 0;
   function sched() { if (pend) return; pend = setTimeout(function () { pend = 0; run(); }, 30); }
