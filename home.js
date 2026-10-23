@@ -339,7 +339,7 @@
     { d: '2014–15', t: 'Reis <span class="at">@ Wereld</span>', a: 'world', img: 'world', h: 662, route: true, more: '/wereldreis/' },
     { d: '2018 · jan.', t: 'Kick-start <a href="https://unisco.nl" target="_blank" rel="noopener noreferrer">@ IM Lounge</a>', a: 'canal', img: 'iml', h: 678 },
     { d: '2020 · apr.', t: 'Global performance <a href="https://beyonddutch.nl" target="_blank" rel="noopener noreferrer">@ BeyondDutch</a>', a: 'globe', img: 'beyonddutch', h: 678 },
-    { d: '2020', t: 'Start samenwerking <span class="at">@ FC Klap</span>', a: 'canal', img: 'fcklap', h: 678 },
+    { d: '2020', t: 'Start samenwerking <a href="https://fcklap.nl" target="_blank" rel="noopener noreferrer">@ FC Klap</a>', a: 'canal', img: 'fcklap', h: 678 },
     { d: '2021 · mei', t: 'Chief marketing officer <a href="https://bikefair.org" target="_blank" rel="noopener noreferrer">@ BikeFair</a>', s: '&amp; oprichting Flii Media', a: 'bike', img: 'bike', h: 678 },
     { d: '2026 · apr.', t: 'Celebrating 5 years <a href="https://flii.nl" target="_blank" rel="noopener noreferrer">@ Flii</a>', s: '<span class="cnt" data-n="40">40</span>+ clients, <span class="cnt" data-n="84">84</span> projects', a: 'party', img: 'flii', h: 678 }
   ];
